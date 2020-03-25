@@ -3,9 +3,16 @@ import { MatIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Store, select } from "@ngrx/store";
-import { selectIsLoading } from "../../store/selectors/login.selector";
+import {
+  SELECT_IS_LOADING,
+  SELECT_ERRORS
+} from "../../store/selectors/login.selector";
 import { AppStateInterface } from "src/app/shared/models/app-state.interface";
 import * as fromLoginActions from "../../store/actions/login.action";
+import { emailValidator } from "src/app/shared/validators/email.validator";
+import { noWhiteSpace } from "src/app/shared/validators/noSpaceWhite.validator";
+import { passwordValidator } from "src/app/shared/validators/password.validator";
+import { StoreValidators } from "src/app/shared/validators/store.validator";
 
 @Component({
   selector: "app-login-page",
@@ -13,10 +20,20 @@ import * as fromLoginActions from "../../store/actions/login.action";
   styleUrls: ["./login-page.component.scss"]
 })
 export class LoginPageComponent implements OnInit {
-  loginForm = this.fb.group({
-    nickUser: ["", [Validators.required]],
-    password: ["", [Validators.required]]
-  });
+  loginForm = this.fb.group(
+    {
+      email: ["", [Validators.required, emailValidator]],
+      password: ["", [Validators.required, noWhiteSpace, passwordValidator]]
+    },
+    {
+      asyncValidators: [
+        StoreValidators.hasStoreError(
+          this.store.select(SELECT_ERRORS),
+          "loginError"
+        )
+      ]
+    }
+  );
 
   loading: boolean;
 
@@ -42,12 +59,12 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.store
-      .pipe(select(selectIsLoading))
+      .pipe(select(SELECT_IS_LOADING))
       .subscribe(isLoading => (this.loading = isLoading));
   }
 
-  get nickUser() {
-    return this.loginForm.get("nickUser");
+  get email() {
+    return this.loginForm.get("email");
   }
 
   get password() {
@@ -57,5 +74,9 @@ export class LoginPageComponent implements OnInit {
   onLogin() {
     console.log(this.loginForm.value);
     this.store.dispatch(fromLoginActions.signIn(this.loginForm.value));
+  }
+
+  recoverPassword() {
+    console.log("recuperar contraseña");
   }
 }

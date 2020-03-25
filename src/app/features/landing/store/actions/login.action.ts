@@ -19,7 +19,7 @@ const SIGN_OUT_SUCCESS = "[LOGIN] Sign Out Success";
 
 export const signIn = createAction(
   SIGN_IN,
-  props<{ nickUser: string; password: string }>()
+  props<{ email: string; password: string }>()
 );
 
 export const signInSuccess = createAction(SIGN_IN_SUCCESS);
@@ -37,7 +37,7 @@ export const singOut = createAction(SIGN_OUT);
 
 export const signInFailure = createAction(
   SIGN_IN_FAILURE,
-  props<{ reason: string }>()
+  props<{ error: string }>()
 );
 
 export const singOutSuccess = createAction(SIGN_OUT_SUCCESS);

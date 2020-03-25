@@ -24,9 +24,9 @@ export class AuthService {
     type: "user"
   };
 
-  signIn(user: string, password: string): Observable<any> {
+  signIn(email: string, password: string): Observable<any> {
     return new Observable(observer => {
-      if (user === this.userFake.email && password === this.userFake.password) {
+      if (email === this.userFake.email && password === this.userFake.password) {
         observer.next(this.userFake.uid);
         observer.complete();
       } else {

@@ -3,9 +3,9 @@ import { createSelector } from "@ngrx/store";
 
 export const selectLogin = (state: AppStateInterface) => state.login;
 
-export const selectIsLoading = createSelector(
+export const SELECT_IS_LOADING = createSelector(
   selectLogin,
   state => state.loading
 );
 
-export const selectErrors = createSelector(selectLogin, state => state.errors);
+export const SELECT_ERRORS = createSelector(selectLogin, state => state.error);

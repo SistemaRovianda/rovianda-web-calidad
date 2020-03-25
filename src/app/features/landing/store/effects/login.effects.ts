@@ -18,9 +18,10 @@ export class LoginEffects {
   signInEffect$ = createEffect(() =>
     this.action$.pipe(
       ofType(fromLoginActions.signIn),
+      delay(2000),
       exhaustMap(action => {
         return forkJoin(
-          this.auth.signIn(action.nickUser, action.password),
+          this.auth.signIn(action.email, action.password),
           this.auth.getTokenCurrentUser()
         ).pipe(
           switchMap(([{ uid, token }, { currentToken }]) => {
@@ -34,7 +35,7 @@ export class LoginEffects {
           catchError(error =>
             of(
               fromLoginActions.finishLoad(),
-              fromLoginActions.signInFailure({reason: 'esto no funciona'})
+              fromLoginActions.signInFailure({error: 'Usuario no valido en el sistema'})
             )
           )
         );
@@ -73,7 +74,7 @@ export class LoginEffects {
           switchMap(result =>
             result
               ? [fromLoginActions.finishLoad()]
-              : [fromLoginActions.signInFailure({ reason: "No autorizado" })]
+              : [fromLoginActions.signInFailure({ error: "No autorizado" })]
           ),
           catchError(error =>
             of(

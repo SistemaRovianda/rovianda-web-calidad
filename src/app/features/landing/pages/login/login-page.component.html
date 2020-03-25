@@ -13,22 +13,25 @@
       <h1 class="title-form-login">Login</h1>
       <mat-form-field class="item-form">
         <mat-label class="input-label">Usuario</mat-label>
-        <input matInput class="input" formControlName="nickUser" required />
+        <input matInput class="input" formControlName="email" required />
         <mat-icon svgIcon="user-svg" matPrefix></mat-icon>
-        <mat-error *ngIf="nickUser.errors">
-          Por favor ingresa un nombre de usuario válido
+        <mat-error *ngIf="email.errors">
+          Por favor ingresa un correo electr&oacute;nico valido
         </mat-error>
       </mat-form-field>
       <mat-form-field class="item-form">
         <mat-label class="input-label">Contrase&ntilde;a</mat-label>
-        <input matInput class="input" formControlName="password" required />
+        <input type="password" matInput class="input" formControlName="password" required />
         <mat-icon svgIcon="lock-svg" matPrefix></mat-icon>
         <mat-error *ngIf="password.errors">
           Por favor ingresa una contraseña válida
       </mat-error>
-        
+      <mat-error class="error-message" *ngIf="loginForm.errors?.loginError">
+        {{ loginForm.errors.loginError}} Error
+      </mat-error>
       </mat-form-field>
-      <h3 class="recuve-password">Recuperar contrase&ntilde;a</h3>
+      
+      <h3 (click)="recoverPassword()" class="recuve-password">Recuperar contrase&ntilde;a</h3>
       <button
         class="btn-login"
         fxLayoutAlign="space-around center"
