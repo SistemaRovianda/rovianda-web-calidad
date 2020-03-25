@@ -1,0 +1,48 @@
+<div class="container-login">
+  <div class="login-message">
+    <h1 class="login-title-message">Bienvenido</h1>
+    <p class="login-message">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui asperiores ab
+      quod corporis dolorem officia assumenda, officiis quo reprehenderit. Illo
+      esse nulla quaerat, eaque reiciendis doloribus debitis quod sit
+      laudantium!
+    </p>
+  </div>
+  <div class="login-form">
+    <form class="form-login" [formGroup]="loginForm" fxLayout="column">
+      <h1 class="title-form-login">Login</h1>
+      <mat-form-field class="item-form">
+        <mat-label class="input-label">Usuario</mat-label>
+        <input matInput class="input" formControlName="nickUser" required />
+        <mat-icon svgIcon="user-svg" matPrefix></mat-icon>
+        <mat-error *ngIf="nickUser.errors">
+          Por favor ingresa un nombre de usuario válido
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="item-form">
+        <mat-label class="input-label">Contrase&ntilde;a</mat-label>
+        <input matInput class="input" formControlName="password" required />
+        <mat-icon svgIcon="lock-svg" matPrefix></mat-icon>
+        <mat-error *ngIf="password.errors">
+          Por favor ingresa una contraseña válida
+      </mat-error>
+        
+      </mat-form-field>
+      <h3 class="recuve-password">Recuperar contrase&ntilde;a</h3>
+      <button
+        class="btn-login"
+        fxLayoutAlign="space-around center"
+        (click)="onLogin()"
+        mat-raised-button
+        [disabled]="loginForm.status == 'INVALID'"
+      >
+        <span *ngIf="!loading">Iniciar sesi&oacute;n</span>
+        <mat-spinner
+          class="custom-spinner"
+          *ngIf="loading"
+          diameter="32"
+        ></mat-spinner>
+      </button>
+    </form>
+  </div>
+</div>

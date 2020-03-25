@@ -1,0 +1,142 @@
+$base-color: #e2bd53;
+$secundary-color: #717171;
+$base-color-text: #717171;
+.container-login {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background-image:
+    url('src/assets/icon-login/fake-logo.png'), // replanzar backgroung image for the official
+    radial-gradient(
+      circle at 12% 72%,
+      $base-color 2%,
+      transparent 2%
+    ),
+    radial-gradient(circle at 12% 72%, white 3%, transparent 3%),
+    radial-gradient(circle at 4.5% 100%, $base-color 5%, transparent 5%),
+    radial-gradient(circle at 4.8% 100%, white 7%, transparent 7%),
+    linear-gradient(90deg, $base-color, 60%, white 40%);
+    background-size: 20%,100%,100%,100%, 100%, contain;
+    background-repeat: no-repeat;
+  background-position: top left 5%;
+  
+
+  .login-message {
+    height: 35%;
+    width: 42%;
+    position: absolute;
+    top: 37%;
+    left: 7%;
+    user-select: none;
+    .login-title-message {
+      color: white;
+      font-size: 2.5vw;
+      font-weight: 600;
+      margin: 0;
+    }
+    .login-message {
+      color: white;
+      font-size: 1.4vw;
+      font-weight: 300 !important;
+      width: 100%;
+      margin: 0;
+      left: 0;
+      top: 20%;
+      height: 80%;
+      text-align: justify;
+    }
+  }
+
+  .login-form {
+    position: absolute;
+    height: 70%;
+    width: 30%;
+    background-color: white;
+    top: 12%;
+    right: 15%;
+    border-radius: 2%;
+    background-image: radial-gradient(
+      circle at 95% 10%,
+      $base-color 10%,
+      transparent 10%
+    );
+    
+    box-shadow: 0px 0px 23px -1px rgba(0, 0, 0, 0.75);
+
+    .form-login {
+      margin: 0 10%;
+      user-select: none;
+      height: 100%;
+      .title-form-login {
+        color: $base-color;
+        font-size: 1.8vw;
+        margin-top: 18%;
+        margin-bottom: 12%;
+        font-weight: 500;
+      }
+
+      .item-form {
+        font-size: 1.1vw;
+        font-weight: 500;
+        mat-icon {
+          font-size: 1.1vw;
+          margin-right: 0.4vw;
+          vertical-align: middle;
+          padding-bottom: 0.5vw;
+        }
+
+        .input-label {
+          margin-left: 2%;
+          vertical-align: top;
+        }
+        .input {
+          border-left: $base-color-text solid 1.1px;
+        }
+      }
+      .recuve-password {
+        font-size: 0.9vw;
+        color: $secundary-color;
+        font-weight: 100;
+        margin: 0;
+        margin-left: 60%;
+
+        cursor: pointer;
+      }
+      .btn-login {
+        position: absolute;
+        width: 35%;
+        font-size: 0.8vw;
+        color: $base-color;
+        bottom: 22%;
+        box-shadow: 0px 0px 9px -1px rgba(0, 0, 0, 0.75);
+      }
+    }
+  }
+}
+
+/* input color class */
+::ng-deep input.mat-input-element {
+  color: $base-color-text;
+  margin-left: 0;
+  height: 110%;
+  padding-left: 2%;
+}
+
+/* Change label color on focused */
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: $base-color;
+}
+
+::ng-deep .mat-form-field.mat-focused .input-label {
+  color: $base-color;
+}
+
+/* underline border color on focused */
+::ng-deep .mat-focused .mat-form-field-underline .mat-form-field-ripple {
+  background-color: $base-color;
+}
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: $base-color;
+}
