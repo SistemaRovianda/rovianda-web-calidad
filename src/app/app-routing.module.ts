@@ -13,6 +13,13 @@ const routes: Routes = [
       import("./features/landing/pages/login/login-page.module").then(
         m => m.LoginPageModule
       )
+  },
+  {
+    path: "dashboard",
+    loadChildren: () =>
+      import(
+        "src/app/features/dashboard/dashboard-layout/dashboard-layout.module"
+      ).then(m => m.DashboardLayoutModule)
   }
 ];
 

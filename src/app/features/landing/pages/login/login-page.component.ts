@@ -6,9 +6,9 @@ import { Store, select } from "@ngrx/store";
 import {
   SELECT_IS_LOADING,
   SELECT_ERRORS
-} from "../../store/selectors/login.selector";
+} from "../../store/login/login.selector";
 import { AppStateInterface } from "src/app/shared/models/app-state.interface";
-import * as fromLoginActions from "../../store/actions/login.action";
+import * as fromLoginActions from "../../store/login/login.action";
 import { emailValidator } from "src/app/shared/validators/email.validator";
 import { noWhiteSpace } from "src/app/shared/validators/noSpaceWhite.validator";
 import { passwordValidator } from "src/app/shared/validators/password.validator";

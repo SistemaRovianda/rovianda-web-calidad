@@ -1,7 +1,7 @@
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { AppStateInterface } from 'src/app/shared/models/app-state.interface';
-import { userReducer } from './user.reducer';
-import { loginReducer } from '../../landing/store/reducers/login.reducer';
+import { userReducer } from '../../landing/store/user/user.reducer';
+import { loginReducer } from '../../landing/store/login/login.reducer';
 
 export const reducers: ActionReducerMap<AppStateInterface> =  {
     user: userReducer,

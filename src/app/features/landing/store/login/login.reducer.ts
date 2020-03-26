@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { LoginPageInterface } from 'src/app/shared/models/login-page.interface';
-import { signIn, finishLoad, signInFailure } from '../actions/login.action';
+import { signIn, finishLoad, signInFailure } from './login.action';
 
 export const loginReducer = createReducer <LoginPageInterface> (
     {loading: false, error: null},

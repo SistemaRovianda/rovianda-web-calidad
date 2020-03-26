@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "src/app/shared/Services/auth.service";
 import { Router } from "@angular/router";
 import { Actions, ofType, createEffect } from "@ngrx/effects";
-import * as fromLoginActions from "../actions/login.action";
-import * as fromUserActions from "src/app/features/store/actions/user.actions";
+import * as fromLoginActions from "./login.action";
+import * as fromUserActions from "src/app/features/landing/store/user/user.actions";
 import { exhaustMap, switchMap, catchError, tap, delay } from "rxjs/operators";
 import { of, forkJoin, from } from "rxjs";
 
@@ -35,7 +35,9 @@ export class LoginEffects {
           catchError(error =>
             of(
               fromLoginActions.finishLoad(),
-              fromLoginActions.signInFailure({error: 'Usuario no valido en el sistema'})
+              fromLoginActions.signInFailure({
+                error: "Usuario no valido en el sistema"
+              })
             )
           )
         );
@@ -70,7 +72,7 @@ export class LoginEffects {
     this.action$.pipe(
       ofType(fromLoginActions.signInSuccess),
       exhaustMap(action =>
-        from(this.router.navigate(["/"])).pipe(
+        from(this.router.navigate(["/dashboard"])).pipe(
           switchMap(result =>
             result
               ? [fromLoginActions.finishLoad()]

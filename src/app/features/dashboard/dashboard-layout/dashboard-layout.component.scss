@@ -1,0 +1,60 @@
+$base-color: #e2bd53;
+$secondary-color: #eef1f6;
+$text-color: #b2b2b2;
+$text-color-secondary: #575552;
+
+.dashboard-container {
+  height: 100vh;
+  width: 100vw;
+
+  .dashboard-menu {
+    background-image: url("src/assets/icon-login/fake-logo.png");
+    background-repeat: no-repeat;
+    background-size: 4%;
+    background-position: right 2% center;
+
+    .menu-dashboard {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      font-size: 1.2vw;
+      .item-menu {
+        float: left;
+        padding: 1.3% 0;
+        margin-right: 4%;
+        color: $text-color;
+        transition: 2s;
+        a {
+          display: inline-block;
+          height: 100%;
+          width: 100%;
+        }
+      }
+      .item-exit{
+          color: $text-color-secondary;
+          margin-right: 4.5%;
+      }
+      .icon-exit{
+          float: left;
+          padding: 1% 0;
+          margin: 0;
+          margin-left: 2%;
+          width: 1%;
+          color: $text-color-secondary;
+          font-size: 1.8vw;
+      }
+
+      .item-menu:hover{
+        cursor: pointer;
+        color: $base-color;
+      }
+    }
+  }
+
+  .dashboard-container-pages {
+    background-color: yellowgreen;
+    background-image: linear-gradient($secondary-color 85%, $base-color 15%);
+  }
+}

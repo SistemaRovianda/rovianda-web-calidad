@@ -17,7 +17,7 @@ export class AuthService {
 
   userFake: UserInterface = {
     email: "rovianda@gmail.com",
-    password: "rovianda123",
+    password: "Rovianda#.123",
     token: "hddskskeokjghskskdn",
     role: "admi",
     uid: "ururjdjsjsjjslanldenimw",

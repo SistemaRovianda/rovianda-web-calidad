@@ -1,3 +1,3 @@
-import { LoginEffects } from "../../landing/store/effects/login.effects";
+import { LoginEffects } from "../../landing/store/login/login.effects";
 
 export const effects = [LoginEffects];

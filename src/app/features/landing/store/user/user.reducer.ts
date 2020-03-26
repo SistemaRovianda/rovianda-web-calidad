@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { UserInterface } from 'src/app/shared/models/user.interface';
-import { loadUser, clearUser } from '../actions/user.actions';
+import { loadUser, clearUser } from './user.actions';
 
 const stateInitialUser: UserInterface =  {
     uid: null,
