@@ -18,8 +18,8 @@ const routes: Routes = [
     path: "dashboard",
     loadChildren: () =>
       import(
-        "src/app/features/dashboard/dashboard-layout/dashboard-layout.module"
-      ).then(m => m.DashboardLayoutModule)
+        "src/app/features/dashboard/layout.module"
+      ).then(m => m.LayoutModule)
   }
 ];
 

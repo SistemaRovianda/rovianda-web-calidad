@@ -1,0 +1,21 @@
+<div class="container-historial" fxLayout="column">
+  <div class="container-filter" fxFlex="15%">
+    <mat-form-field (keyup)="loadFilter(search.value)" class="search-input" appearance="outline" >
+      <mat-label>
+        Buscar  
+      </mat-label>
+      <input matInput type="text" class="input" #search/>
+
+      <button mat-icon-button matSuffix (click)="filter()" [disabled]="search.value.length ==0"><mat-icon matSuffix>search</mat-icon></button>
+      
+    </mat-form-field>
+  </div>
+  <div class="container-cards" fxFlex="85%" fxLayout="row">
+    <div class="historial" fxFlex="45%">
+      <app-table-historial></app-table-historial>
+    </div>
+    <div class="documents" fxFlex="55%">
+      <app-table-documents></app-table-documents>
+    </div>
+  </div>
+</div>

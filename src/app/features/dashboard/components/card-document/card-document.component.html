@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="title-document">
+    <p>
+      {{ document.name }}
+    </p>
+  </div>
+
+  <button
+    fxLayout="row"
+    fxLayoutAlign="space-around center"
+    mat-button
+    (click)="downloadDocument()"
+  >
+    <span *ngIf="!isDownloadDocument">Descargar</span>
+
+    <mat-spinner
+      style="margin:0 auto;"
+      *ngIf="isDownloadDocument"
+      diameter="25"
+    ></mat-spinner>
+  </button>
+</div>

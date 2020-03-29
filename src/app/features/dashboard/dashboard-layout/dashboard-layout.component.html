@@ -1,14 +1,39 @@
 <div class="dashboard-container" fxLayout="column">
   <div class="dashboard-menu" fxFlex="8%">
     <ul class="menu-dashboard">
-      <mat-icon class="icon-exit">arrow_back_ios</mat-icon>
-      <li class="item-menu item-exit">
-        <a> Salir</a>
+      <div class="logout">
+        <mat-icon class="icon-exit">arrow_back_ios</mat-icon>
+        <li class="item-menu item-exit">
+          <a> Salir</a>
+        </li>
+      </div>
+      <li
+        class="item-menu"
+        routerLink="./historial"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a>Historial</a>
       </li>
-      <li class="item-menu"><a>Historial</a></li>
-      <li class="item-menu"><a>Agregar usuario</a></li>
-      <li class="item-menu"><a>Reportes</a></li>
+      <li
+        class="item-menu"
+        routerLink="./historial"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a>Agregar usuario</a>
+      </li>
+      <li
+        class="item-menu"
+        routerLink="./historial"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a>Reportes</a>
+      </li>
     </ul>
   </div>
-  <div class="dashboard-container-pages" fxFlex="92%"></div>
+  <div class="dashboard-container-pages" fxFlex="92%">
+    <router-outlet></router-outlet>
+  </div>
 </div>

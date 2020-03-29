@@ -6,7 +6,7 @@ $base-color-text: #717171;
   width: 100vw;
   position: relative;
   background-image:
-    url('src/assets/icon-login/fake-logo.png'), // replanzar backgroung image for the official
+    url('src/assets/icon-login/logo_rovianda.svg'), // replanzar backgroung image for the official
     radial-gradient(
       circle at 12% 72%,
       $base-color 2%,
@@ -16,7 +16,7 @@ $base-color-text: #717171;
     radial-gradient(circle at 4.5% 100%, $base-color 5%, transparent 5%),
     radial-gradient(circle at 4.8% 100%, white 7%, transparent 7%),
     linear-gradient(90deg, $base-color, 60%, white 40%);
-    background-size: 20%,100%,100%,100%, 100%, contain;
+    background-size: 30%,100%,100%,100%, 100%, contain;
     background-repeat: no-repeat;
   background-position: top left 5%;
   

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="table-container">
+    <h1>Documento</h1>
+    <div class="container-card">
+      <div
+        *ngIf="isLoading"
+        class="custom-spinner"
+        fxLayoutAlign="space-around center"
+      >
+        <mat-spinner style="margin:auto;"></mat-spinner>
+      </div>
+      <ng-container *ngIf="!isLoading">
+        <ng-container *ngFor="let tempDocument of documents">
+          <app-card-document [document]="tempDocument"></app-card-document>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>

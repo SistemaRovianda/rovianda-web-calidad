@@ -13,18 +13,11 @@ import {
 } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-const routes: Routes = [
-  {
-    path: "",
-    component: DashboardLayoutComponent
-  }
-];
-
 const DECLARATIONS = [DashboardLayoutComponent];
 
 const IMPORTS = [
   CommonModule,
-  RouterModule.forChild(routes),
+  RouterModule,
   FlexLayoutModule,
   MatCardModule,
   MatFormFieldModule,

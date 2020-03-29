@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="table-container">
+    <div class="header-list">
+      <h1 class="header-date">Fecha</h1>
+      <h1 class="header-state">Estado</h1>
+    </div>
+    <div class="container-card">
+      <div
+        *ngIf="isLoading"
+        class="custom-spinner"
+        fxLayoutAlign="space-around center"
+      >
+        <mat-spinner style="margin:auto;"></mat-spinner>
+      </div>
+
+      <ng-container *ngIf="!isLoading">
+        <ng-container *ngFor="let tempHistorial of historial">
+          <app-card-historial [historial]="tempHistorial"></app-card-historial>
+        </ng-container>
+      </ng-container>
+    </div>
+    <button
+      fxLayout="row"
+      fxLayoutAlign="space-around center"
+      mat-raised-button
+      (click)="downloadHistorial()"
+    >
+      <span *ngIf="!isDownloadHistorial"> Descargar historial</span>
+      <mat-spinner
+        style="margin:0 auto;"
+        *ngIf="isDownloadHistorial"
+        diameter="25"
+      ></mat-spinner>
+    </button>
+  </div>
+</div>
