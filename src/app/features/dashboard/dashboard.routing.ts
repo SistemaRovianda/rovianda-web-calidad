@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { DashboardLayoutComponent } from "./dashboard-layout/dashboard-layout.component";
-import { DashboardLayoutModule } from './dashboard-layout/dashboard-layout.module';
-import { HIstorialResolver } from 'src/app/shared/resolvers/historial.resolver';
-import { DocumentsResolver } from 'src/app/shared/resolvers/documents.resolver';
+import { DashboardLayoutModule } from "./dashboard-layout/dashboard-layout.module";
+import { HIstorialResolver } from "src/app/shared/resolvers/historial.resolver";
+import { DocumentsResolver } from "src/app/shared/resolvers/documents.resolver";
 
 const ROUTES: Routes = [
   {
@@ -21,10 +21,17 @@ const ROUTES: Routes = [
           import("./pages/historial-page/historial-page.module").then(
             m => m.HistorialPageModule
           ),
-          resolve:{
-            historial: HIstorialResolver,
-            documents: DocumentsResolver
-          }
+        resolve: {
+          historial: HIstorialResolver,
+          documents: DocumentsResolver
+        }
+      },
+      {
+        path: "add-user",
+        loadChildren: () =>
+          import("./pages/add-user-page/add-user-page.module").then(
+            m => m.AddUserPageModule
+          )
       }
     ]
   }

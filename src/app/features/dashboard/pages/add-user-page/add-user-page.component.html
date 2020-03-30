@@ -1,1 +1,42 @@
-<p>add-user-page works!</p>
+<div class="container">
+  <form class="form-register" [formGroup]="userForm" fxLayout="column">
+    <h1 class="title-form">Registrar Usuario</h1>
+    <div class="img-perfil"></div>
+    <mat-form-field class="item-form" appearance="outline">
+      <mat-label class="input">Correo</mat-label>
+      <input matInput class="input" formControlName="email" required />
+    </mat-form-field>
+    <mat-form-field class="item-form" appearance="outline">
+      <mat-label class="input">Contrase&ntilde;a</mat-label>
+      <input
+        matInput
+        class="input"
+        type="password"
+        formControlName="password"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="item-form" appearance="outline">
+      <mat-label>Tipo de usuario</mat-label>
+      <mat-select formControlName="typeUser">
+        <mat-option value="">Seleccionar un tipo de usuario</mat-option>
+        <mat-option *ngFor="let user of listuser" [value]="user">
+          {{ user }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      fxLayoutAlign="space-around center"
+      [disabled]="userForm.invalid"
+      (click)="registerUser()"
+    >
+      <span *ngIf="!loading">Bajar reporte</span>
+      <mat-spinner
+        class="custom-spinner"
+        *ngIf="loading"
+        diameter="25"
+      ></mat-spinner>
+    </button>
+  </form>
+</div>
