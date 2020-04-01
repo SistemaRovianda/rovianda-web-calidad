@@ -1,0 +1,183 @@
+$color-text-primary: #575552;
+$base-color: #e2bd53;
+$base-color-text: #717171;
+.container {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 3% 7%;
+  padding-bottom: 4%;
+  .form-reports {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    box-shadow: 0px 0px 16px -4px rgba(0, 0, 0, 0.75);
+    color: black;
+    user-select: none;
+    h1 {
+      color: $color-text-primary;
+      font-size: 1vw;
+      margin: 1.5% auto;
+    }
+    .title-form {
+      font-size: 1.3vw;
+      font-weight: 500;
+
+      margin-left: 2%;
+    }
+    .container-dates {
+      height: 10%;
+      .date {
+        width: 20%;
+        margin-left: 26%;
+        margin-top: 1%;
+      }
+      .date-right {
+        margin-left: 8%;
+      }
+    }
+    .container-button-select {
+      height: 20%;
+      padding: 0 23%;
+      box-sizing: border-box;
+      .options-reports {
+        width: 100%;
+        border: none;
+        .option-report {
+          color: white;
+          border-radius: 8px;
+          margin-right: 24%;
+          width: 17%;
+        }
+        .option-report-right {
+          margin: 0;
+        }
+        .mat-button-toggle {
+          background-color: $base-color-text;
+          ::ng-deep .mat-button-toggle-label-content {
+            margin-top: 15%;
+            white-space: pre-line;
+            line-height: 20px;
+            padding: 16%;
+          }
+        }
+
+        .mat-button-toggle-checked {
+          background-color: $color-text-primary;
+        }
+      }
+    }
+    .container-extension-report {
+      height: 15%;
+      padding: 0 37%;
+      box-sizing: border-box;
+      .check-group {
+        height: 100%;
+        width: 100%;
+
+        .check-option {
+          width: 50%;
+          height: 100%;
+
+          .image-item {
+            height: 100%;
+            width: 50%;
+
+            .image {
+              height: 80%;
+              width: 100%;
+
+              background-image: url("src/assets/icon-reports/file-excel-solid.svg");
+              background-repeat: no-repeat;
+              background-position: center center;
+              background-size: contain;
+            }
+            p {
+              margin: 0;
+              text-align: center;
+            }
+          }
+          .checkbox-option {
+            margin: auto 0;
+            margin-left: 10%;
+          }
+        }
+        .check-right {
+          margin-left: 30%;
+          .image-item {
+            .pdf {
+              background-image: url("src/assets/icon-reports/file-pdf-solid.svg");
+            }
+          }
+        }
+        ::ng-deep .mat-checkbox .mat-checkbox-frame {
+          transform: scale(1.4);
+          border-color: $base-color-text;
+         
+        }
+        ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+          background-color: $base-color;
+        }
+      }
+    }
+    /* custom height form */
+    ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+      padding: 0.5em 0px !important;
+    }
+
+    /* custom position label */
+    ::ng-deep .mat-form-field-label-wrapper {
+      top: -1.3em;
+    }
+
+    /* custom  form background color and border*/
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+      background-color: white;
+      border-radius: 5px;
+    }
+    
+
+    /* custom position label float */
+    ::ng-deep
+      .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+      .mat-form-field-label {
+      transform: translateY(-1.6em) scale(0.9);
+      width: 70;
+    }
+    //input outline color
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+      color: $color-text-primary;
+      opacity: 1 !important;
+    }
+
+    //mat-input focused color
+    ::ng-deep
+      .mat-form-field-appearance-outline.mat-focused
+      .mat-form-field-outline-thick {
+      color: black;
+    }
+
+    /* Change label color on focused */
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+      color: black;
+    }
+    ::ng-deep .mat-form-field-label {
+      color: $base-color;
+    }
+    ::ng-deep .mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: white;
+    }
+    .custom-button {
+      color: white;
+      background-color: $base-color;
+      width: 20%;
+      margin: 0 auto;
+      margin-top: 1%;
+      font-weight: 300;
+      font-size: 1.3vw;
+      height: 10%;
+    }
+  }
+}

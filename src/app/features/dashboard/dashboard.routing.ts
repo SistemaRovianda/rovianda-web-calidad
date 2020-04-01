@@ -32,6 +32,13 @@ const ROUTES: Routes = [
           import("./pages/add-user-page/add-user-page.module").then(
             m => m.AddUserPageModule
           )
+      },
+      {
+        path: "reports",
+        loadChildren: () =>
+          import("./pages/reports-page/reports-page.module").then(
+            m => m.ReportsPageModule
+          )
       }
     ]
   }

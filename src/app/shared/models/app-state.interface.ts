@@ -4,6 +4,7 @@ import { HistorialListInterface } from "./historial-list.interface";
 import { DocumentsInterface } from "./documents.interface";
 import { FilterInterface } from "./filter.interface";
 import { AddUserPageInterface } from "./add-user.page";
+import { ReportPageInterface } from "./reportPage.interface";
 
 export interface AppStateInterface {
   user: UserInterface;
@@ -12,4 +13,5 @@ export interface AppStateInterface {
   documents: DocumentsInterface;
   filterHistorialPage: FilterInterface;
   add_user: AddUserPageInterface;
+  report: ReportPageInterface;
 }

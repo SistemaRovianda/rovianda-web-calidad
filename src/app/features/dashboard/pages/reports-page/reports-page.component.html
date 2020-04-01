@@ -1,1 +1,102 @@
-<p>reports-page works!</p>
+<div class="container">
+  <form class="form-reports" [formGroup]="reportForm" fxLayout="column">
+    <h1 class="title-form">Generar reportes</h1>
+    <div class="container-dates" fxLayout="row">
+      <mat-form-field class="date" appearance="outline">
+        <mat-label>Fecha inicial</mat-label>
+        <input
+          autocomplete="off"
+          formControlName="dateSt"
+          matInput
+          [matDatepicker]="picker"
+          (click)="picker.open()"
+          required
+        />
+        <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="dateSt.errors">Fecha no v&aacute;lida</mat-error>
+      </mat-form-field>
+      <mat-form-field class="date date-right" appearance="outline">
+        <mat-label>Fecha final </mat-label>
+        <input
+          autocomplete="off"
+          formControlName="dateEn"
+          matInput
+          [matDatepicker]="pickerEnd"
+          (click)="pickerEnd.open()"
+          [min]="dateSt.value"
+          required
+        />
+        <mat-datepicker-toggle
+          matPrefix
+          [for]="pickerEnd"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+        <mat-error *ngIf="dateEn.errors">Fecha no v&aacute;lida</mat-error>
+      </mat-form-field>
+    </div>
+    <h1>Seleccione el tipo de reporte</h1>
+    <div class="container-button-select" fxLayout="row">
+      <mat-button-toggle-group
+        formControlName="typereport"
+        class="options-reports"
+      >
+        <mat-button-toggle class="option-report" value="1"
+          >Reporte de produccion</mat-button-toggle
+        >
+        <mat-button-toggle class="option-report" value="2"
+          >Reporte de salidas</mat-button-toggle
+        >
+        <mat-button-toggle class="option-report option-report-right" value="3"
+          >Reporte de inventario</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
+    <mat-error style="margin: 1% auto 0 auto;" *ngIf="typereport.errors"
+      >Es necesario seleccionar un tipo de reporte</mat-error
+    >
+    <h1>Seleccione el formato del reporte</h1>
+    <div class="container-extension-report" fxLayout="row">
+      <div class="check-group" fxLayout="row">
+        <div class="check-option" fxLayout="row">
+          <div class="image-item" fxLayout="column">
+            <div class="image"></div>
+            <p>Excel</p>
+          </div>
+          <mat-checkbox
+            (change)="changeCheckbox('excel')"
+            #checkExcel
+            formControlName="excel"
+            class="checkbox-option"
+          ></mat-checkbox>
+        </div>
+        <div class="check-option check-right" fxLayout="row">
+          <div class="image-item" fxLayout="column">
+            <div class="image pdf"></div>
+            <p>PDF</p>
+          </div>
+          <mat-checkbox
+            #checkPDF
+            (change)="changeCheckbox('pdf')"
+            formControlName="pdf"
+            class="checkbox-option"
+          ></mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <button
+      mat-raised-button
+      fxLayoutAlign="space-around center"
+      class="custom-button"
+      (click)="requestReport()"
+      [disabled]="reportForm.invalid"
+    >
+      <span *ngIf="!loading">Descargar Reporte</span>
+      <mat-spinner
+        class="custom-spinner"
+        *ngIf="loading"
+        diameter="25"
+      ></mat-spinner>
+    </button>
+  </form>
+</div>
