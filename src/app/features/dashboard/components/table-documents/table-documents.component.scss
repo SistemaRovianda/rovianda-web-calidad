@@ -1,6 +1,6 @@
 $base-color: #e2bd53;
 $secundary-color: #717171;
-$base-color-text: #575552;
+$base-color-text: #e2e2e2;
 
 .container {
   box-sizing: border-box;
@@ -17,11 +17,11 @@ $base-color-text: #575552;
     position: relative;
     h1 {
       font-weight: 400;
-      color: $base-color-text;
-      font-size: 1.5vw;
+      color: #e2bd53;
+      font-size: 1.3vw;
       position: absolute;
       top: 3%;
-      left: 25%;
+      left: 3%;
     }
     .container-card {
       position: absolute;

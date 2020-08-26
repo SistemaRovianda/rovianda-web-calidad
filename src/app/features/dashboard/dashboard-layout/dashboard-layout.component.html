@@ -3,7 +3,7 @@
     <ul class="menu-dashboard">
       <div class="logout">
         <mat-icon class="icon-exit">arrow_back_ios</mat-icon>
-        <li class="item-menu item-exit">
+        <li (click)="logout()" class="item-menu item-exit">
           <a> Salir</a>
         </li>
       </div>
@@ -22,14 +22,6 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <a>Agregar usuario</a>
-      </li>
-      <li
-        class="item-menu"
-        routerLink="./reports"
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a>Reportes</a>
       </li>
     </ul>
   </div>

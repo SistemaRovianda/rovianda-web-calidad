@@ -8,17 +8,18 @@ import {
   MatButtonModule,
   MatInputModule,
   MatIconModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
 } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { TableHistorialModule } from '../../components/table-historial/table-historial.module';
-import { TableDocumentsModule } from '../../components/table-documents/table-documents.module';
+import { TableHistorialModule } from "../../components/table-historial/table-historial.module";
+import { TableDocumentsModule } from "../../components/table-documents/table-documents.module";
+import { CardDateModule } from "../../components/card-date/card-date.module";
 
 const routes: Routes = [
   {
     path: "",
-    component: HistorialPageComponent
-  }
+    component: HistorialPageComponent,
+  },
 ];
 
 const COMMON_DECLARATIONS = [HistorialPageComponent];
@@ -35,11 +36,12 @@ const COMMON_IMPORTS = [
   FormsModule,
   ReactiveFormsModule,
   TableHistorialModule,
-  TableDocumentsModule
+  TableDocumentsModule,
+  CardDateModule,
 ];
 
 @NgModule({
   declarations: COMMON_DECLARATIONS,
-  imports: COMMON_IMPORTS
+  imports: COMMON_IMPORTS,
 })
 export class HistorialPageModule {}

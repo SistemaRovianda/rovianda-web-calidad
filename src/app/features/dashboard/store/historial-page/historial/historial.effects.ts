@@ -11,42 +11,5 @@ export class HistorialEffects {
     private historialService: HistorialService
   ) {}
 
-  loadHistorial$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(fromHistorialActions.startLoadHistorial),
-      exhaustMap(action =>
-        this.historialService.getHistorial().pipe(
-          delay(6000),
-          switchMap(historial => [
-            fromHistorialActions.loadHistorial({ historial }),
-            fromHistorialActions.finishLoadHistorial()
-          ]),
-          catchError(error =>
-            of(
-              fromHistorialActions.loadHistorialFailure(error),
-              fromHistorialActions.finishLoadHistorial()
-            )
-          )
-        )
-      )
-    )
-  );
-
-  downloadHistorialEffect$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(fromHistorialActions.downloadHistorial),
-      exhaustMap(action =>
-        this.historialService.downloadHistorialService(action.historial).pipe(
-          delay(4000),
-          switchMap(action => [fromHistorialActions.finishDownloadHistorial()]),
-          catchError(error =>
-            of(
-              fromHistorialActions.loadHistorialFailure(error),
-              fromHistorialActions.finishDownloadHistorial()
-            )
-          )
-        )
-      )
-    )
-  );
+  
 }

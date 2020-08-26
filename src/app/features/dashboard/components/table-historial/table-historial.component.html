@@ -1,8 +1,8 @@
 <div class="container">
   <div class="table-container">
     <div class="header-list">
-      <h1 class="header-date">Fecha</h1>
-      <h1 class="header-state">Estado</h1>
+      <h1 class="header-date">Accion</h1>
+      <h1 class="header-state">Fecha</h1>
     </div>
     <div class="container-card">
       <div
@@ -10,27 +10,22 @@
         class="custom-spinner"
         fxLayoutAlign="space-around center"
       >
-        <mat-spinner style="margin:auto;"></mat-spinner>
+        <mat-spinner style="margin: auto;"></mat-spinner>
       </div>
-
-      <ng-container *ngIf="!isLoading">
-        <ng-container *ngFor="let tempHistorial of historial">
-          <app-card-historial [historial]="tempHistorial"></app-card-historial>
-        </ng-container>
-      </ng-container>
+      <div *ngIf="!isLoading">
+        <app-search-packaging
+          *ngIf="type === 'packaging' && found"
+          [packaging]="historial"
+        ></app-search-packaging>
+        <app-search-drief
+          *ngIf="type === 'drief' && found"
+          [drief]="historial"
+        ></app-search-drief>
+        <history-list
+          *ngIf="type === 'meat' && found"
+          [meat]="historial"
+        ></history-list>
+      </div>
     </div>
-    <button
-      fxLayout="row"
-      fxLayoutAlign="space-around center"
-      mat-raised-button
-      (click)="downloadHistorial()"
-    >
-      <span *ngIf="!isDownloadHistorial"> Descargar historial</span>
-      <mat-spinner
-        style="margin:0 auto;"
-        *ngIf="isDownloadHistorial"
-        diameter="25"
-      ></mat-spinner>
-    </button>
   </div>
 </div>

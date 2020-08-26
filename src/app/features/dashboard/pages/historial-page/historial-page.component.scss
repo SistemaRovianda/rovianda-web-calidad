@@ -5,14 +5,18 @@ $base-color-text: #717171;
 .container-historial {
   height: 100%;
   width: 100%;
-  user-select: none;
   .container-filter {
-    .search-input {
-      width: 20%;
-      padding: 1% 40%;
-      color: $base-color;
-      font-size: 1.1vw;
+    form {
+      height: 100%;
+      padding: 0;
+      .item-form {
+        margin: 0 2%;
+      }
     }
+  }
+  .documents {
+    height: 100%;
+    width: 100%;
   }
 }
 
@@ -53,11 +57,8 @@ $base-color-text: #717171;
 
 /* Change label color on focused */
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-  color: $base-color-text;
+  color: black;
 }
 ::ng-deep .mat-form-field-label {
   color: $base-color;
 }
-
-
-

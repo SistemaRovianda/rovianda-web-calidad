@@ -2,36 +2,131 @@
   <form class="form-register" [formGroup]="userForm" fxLayout="column">
     <h1 class="title-form">Registrar Usuario</h1>
     <div class="img-perfil"></div>
-    <mat-form-field class="item-form" appearance="outline">
-      <mat-label class="input">Correo</mat-label>
-      <input matInput class="input" formControlName="email" required />
-    </mat-form-field>
-    <mat-form-field class="item-form" appearance="outline">
-      <mat-label class="input">Contrase&ntilde;a</mat-label>
-      <input
-        matInput
-        class="input"
-        type="password"
-        formControlName="password"
-        required
-      />
-    </mat-form-field>
-    <mat-form-field class="item-form" appearance="outline">
-      <mat-label>Tipo de usuario</mat-label>
-      <mat-select formControlName="typeUser">
-        <mat-option value="">Seleccionar un tipo de usuario</mat-option>
-        <mat-option *ngFor="let user of listuser" [value]="user">
-          {{ user }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="space-around end">
+      <mat-form-field class="item-form" appearance="outline">
+        <mat-label class="input">Nombre</mat-label>
+        <input matInput class="input" formControlName="name" required />
+        <mat-error
+          *ngIf="
+            name.invalid &&
+            !name.errors?.notCharacter &&
+            (name.dirty || name.touched)
+          "
+        >
+          Por favor ingrese un nombre
+        </mat-error>
+        <mat-error *ngIf="name.errors?.notCharacter">
+          No son validos los caracteres especiales y números
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="item-form" appearance="outline">
+        <mat-label class="input">Apellido Paterno</mat-label>
+        <input matInput class="input" formControlName="firstName" required />
+        <mat-error
+          *ngIf="
+            firstName.invalid &&
+            !firstName.errors?.notCharacter &&
+            (firstName.dirty || firstName.touched)
+          "
+        >
+          Por favor ingrese un apellido paterno
+        </mat-error>
+        <mat-error *ngIf="firstName.errors?.notCharacter">
+          No son validos los caracteres especiales y números
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around end">
+      <mat-form-field class="item-form" appearance="outline">
+        <mat-label class="input">Apellido Materno</mat-label>
+        <input matInput class="input" formControlName="lastName" required />
+        <mat-error
+          *ngIf="
+            lastName.invalid &&
+            !lastName.errors?.notCharacter &&
+            (lastName.dirty || lastName.touched)
+          "
+        >
+          Por favor ingrese un apellido materno
+        </mat-error>
+        <mat-error *ngIf="lastName.errors?.notCharacter">
+          No son validos los caracteres especiales y números
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="item-form" appearance="outline">
+        <mat-label class="input">Correo</mat-label>
+        <input matInput class="input" formControlName="email" required />
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+          Por favor ingresar un correo electrónico válido
+        </mat-error>
+        <mat-error *ngIf="email.errors?.whitespace && email.touched">
+          No se aceptan espacios en blanco
+        </mat-error>
+        <mat-error *ngIf="!email.errors?.isValidEmail">
+          Ingrese un formato de correo electrónico válido
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around end">
+      <mat-form-field class="item-form" appearance="outline">
+        <mat-label class="input">Contraseña</mat-label>
+        <input
+          matInput
+          class="input"
+          type="password"
+          formControlName="password"
+          required
+        />
+        <mat-error
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+        >
+          Ingrese un contraseña
+        </mat-error>
+        <mat-error *ngIf="password.touched && password.errors?.whitespace">
+          No se aceptan espacios en blanco
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="item-form" appearance="outline">
+        <mat-label class="input">Puesto</mat-label>
+        <input matInput class="input" formControlName="job" required />
+        <mat-error
+          *ngIf="
+            job.invalid &&
+            !job.errors?.notCharacter &&
+            (job.dirty || job.touched)
+          "
+        >
+          Ingresar un puesto de trabajo
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around end">
+      <mat-form-field class="item-form" appearance="outline">
+        <mat-label>Tipo de usuario</mat-label>
+        <select matNativeControl formControlName="role" required>
+          <option *ngFor="let option of roles" [value]="option.rol">{{
+            option.name
+          }}</option>
+        </select>
+        <mat-error *ngIf="role.invalid && (role.dirty || role.touched)">
+          Seleccionar un tipo de usuario
+        </mat-error>
+      </mat-form-field>
+    </div>
+
     <button
-      mat-raised-button
       fxLayoutAlign="space-around center"
-      [disabled]="userForm.invalid"
       (click)="registerUser()"
+      mat-button
+      class="btn-add-user"
+      [disabled]="userForm.invalid"
+      [ngClass]="userForm.invalid ? 'disabled' : 'active'"
     >
-      <span *ngIf="!loading">Bajar reporte</span>
+      <span *ngIf="!loading">Registar usuario</span>
       <mat-spinner
         class="custom-spinner"
         *ngIf="loading"

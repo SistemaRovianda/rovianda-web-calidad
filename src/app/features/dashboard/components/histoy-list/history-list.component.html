@@ -1,0 +1,54 @@
+<div class="content">
+  <div class="dates" *ngIf="_meat != undefined && _meat != null">
+    <div class="reception">
+      <div class="text">Fecha de recepción</div>
+      <div class="value">
+        {{ (_meat.receptionDate | date: "dd/MM/yyyy") || "Sin registro" }}
+      </div>
+    </div>
+    <div class="dates">
+      <div class="dateOpen">
+        <div class="text">Fecha de apertura</div>
+        <div class="value">
+          {{
+            (_meat.fridge.openingDate | date: "dd/MM/yyyy") || "Sin registro"
+          }}
+        </div>
+      </div>
+      <div class="dateEnd">
+        <div class="text">Fecha de cierre</div>
+        <div class="value">
+          {{ (_meat.fridge.closedDate | date: "dd/MM/yyyy") || "Sin registro" }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="outputs" *ngIf="dataSource != undefined && dataSource != null">
+    <h5>Salidas</h5>
+    <!-- <div class="output">
+            <mat-table [dataSource]="dataSource">
+                
+                <ng-container matColumnDef="number">
+                  <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                  <mat-cell *matCellDef="let i=index"> {{i +1}} </mat-cell>
+                </ng-container>
+              
+                
+                <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.outputName}} </mat-cell>
+                </ng-container>
+              
+                
+                <ng-container matColumnDef="date">
+                  <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{(element.date | date:"dd/MM/yyyy") || 'Sin registro'}} </mat-cell>
+                </ng-container>
+  
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
+              <div *ngIf="dataSource.length === 0" class="notFound">Sin registros</div>
+        </div> -->
+  </div>
+</div>

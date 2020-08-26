@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { IsAuthGuard } from './shared/guards/is-auth.guard';
+import { AuthGaurd } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -9,6 +11,7 @@ const routes: Routes = [
   },
   {
     path: "login",
+    canActivate: [IsAuthGuard],
     loadChildren: () =>
       import("./features/landing/pages/login/login-page.module").then(
         m => m.LoginPageModule
@@ -16,6 +19,7 @@ const routes: Routes = [
   },
   {
     path: "dashboard",
+    canActivate:[AuthGaurd],
     loadChildren: () =>
       import(
         "src/app/features/dashboard/layout.module"

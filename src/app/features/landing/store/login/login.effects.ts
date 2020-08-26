@@ -18,49 +18,70 @@ export class LoginEffects {
   signInEffect$ = createEffect(() =>
     this.action$.pipe(
       ofType(fromLoginActions.signIn),
-      delay(2000),
-      exhaustMap(action => {
-        return forkJoin(
-          this.auth.signIn(action.email, action.password),
-          this.auth.getTokenCurrentUser()
-        ).pipe(
-          switchMap(([{ uid, token }, { currentToken }]) => {
+      exhaustMap((action) =>
+        this.auth.signIn(action.email, action.password).pipe(
+          switchMap(({ uid, token }) => {
             return [
               fromLoginActions.startLoad(),
               fromUserActions.loadUser({ uid, token }),
-              fromUserActions.loadCurrentToken({ currentToken }),
-              fromLoginActions.signAuthSuccess({ uid })
+              fromUserActions.loadCurrentToken({ uid }),
             ];
           }),
-          catchError(error =>
+          catchError((error) =>
             of(
               fromLoginActions.finishLoad(),
-              fromLoginActions.signInFailure({
-                error: "Usuario no valido en el sistema"
-              })
+              fromLoginActions.signInFailure({ error: error.message })
             )
           )
-        );
-      })
+        )
+      )
+    )
+  );
+
+  loadCurrentTokenEffect$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(fromUserActions.loadCurrentToken),
+      exhaustMap((action) =>
+        this.auth.getTokenCurrentUser().pipe(
+          switchMap(({ currentToken }) => {
+            localStorage.setItem("token", currentToken);
+            return [
+              fromUserActions.loadUser({ currentToken }),
+              fromLoginActions.signAuthSuccess({ uid: action.uid }),
+            ];
+          }),
+          catchError((error) =>
+            of(
+              fromLoginActions.finishLoad(),
+              fromLoginActions.signInFailure({ error })
+            )
+          )
+        )
+      )
     )
   );
 
   signAuthSuccessEffect$ = createEffect(() =>
     this.action$.pipe(
       ofType(fromLoginActions.signAuthSuccess),
-      exhaustMap(action =>
+      exhaustMap((action) =>
         this.auth.getUserData(action.uid).pipe(
-          delay(5000),
-          switchMap(({ token }) => [
-            fromUserActions.loadUser({
-              token
-            }),
-            fromLoginActions.signInSuccess()
-          ]),
-          catchError(error =>
+          switchMap(({ name, lastSurname, firstSurname, rol }) => {
+            localStorage.setItem("role", rol);
+            return [
+              fromUserActions.loadUser({
+                name,
+                firstSurname,
+                lastSurname,
+                rol,
+              }),
+              fromLoginActions.signInSuccess(),
+            ];
+          }),
+          catchError((error) =>
             of(
               fromLoginActions.finishLoad(),
-              fromLoginActions.signInFailure(error)
+              fromLoginActions.signInFailure({ error })
             )
           )
         )
@@ -71,19 +92,40 @@ export class LoginEffects {
   signInSuccessEffect$ = createEffect(() =>
     this.action$.pipe(
       ofType(fromLoginActions.signInSuccess),
-      exhaustMap(action =>
+      exhaustMap((action) =>
         from(this.router.navigate(["/dashboard"])).pipe(
-          switchMap(result =>
+          switchMap((result) =>
             result
               ? [fromLoginActions.finishLoad()]
-              : [fromLoginActions.signInFailure({ error: "No autorizado" })]
-          ),
-          catchError(error =>
-            of(
-              fromLoginActions.finishLoad(),
-              fromLoginActions.signInFailure(error)
-            )
+              : [
+                  fromLoginActions.signInFailure({
+                    error: "Usuario no valido ",
+                  }),
+                ]
           )
+        )
+      )
+    )
+  );
+
+  signInFailureEffect$ = createEffect(
+    () =>
+      this.action$.pipe(
+        ofType(fromLoginActions.signInFailure),
+        tap((action) => localStorage.clear())
+      ),
+    {
+      dispatch: false,
+    }
+  );
+
+  sigOutEffect$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(fromLoginActions.singOut),
+      exhaustMap((action) =>
+        this.auth.signOut().pipe(
+          switchMap((res) => [fromUserActions.clearUser()]),
+          catchError((err) => of(fromLoginActions.signInFailure(err)))
         )
       )
     )

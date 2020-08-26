@@ -5,10 +5,15 @@ export const ADD_USER_STATE = (state: AppStateInterface) => state.add_user;
 
 export const SELECT_ADD_USER_ERROR = createSelector(
   ADD_USER_STATE,
-  state => state.error
+  (state) => state.error
 );
 
 export const SELECT_ADD_USER_LOADING = createSelector(
   ADD_USER_STATE,
-  state => state.loading
+  (state) => state.loading
+);
+
+export const SELECT_ADD_USER_RESULT = createSelector(
+  ADD_USER_STATE,
+  (state) => state.result
 );

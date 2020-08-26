@@ -4,12 +4,14 @@ import { Store } from "@ngrx/store";
 import {
   SELECT_HISTORIAL_LOADING,
   SELECT_HISTORIAL,
-  SELECT_GENERATE_HISTORIAL
+  SELECT_GENERATE_HISTORIAL,
 } from "../../store/historial-page/historial/historial.selector";
 import { HistorialInterface } from "src/app/shared/models/historial.interface";
 import {
   SELECT_STATE_FILTER,
-  SELECT_IS_FILTER
+  SELECT_IS_LOADING,
+  SELECT_TYPE_MATERIAL,
+  SELECT_RESULT_LOT_FOUND,
 } from "../../store/historial-page/filter/filter.selector";
 
 import * as fromHistorialActions from "../../store/historial-page/historial/historial.action";
@@ -17,48 +19,27 @@ import * as fromHistorialActions from "../../store/historial-page/historial/hist
 @Component({
   selector: "app-table-historial",
   templateUrl: "./table-historial.component.html",
-  styleUrls: ["./table-historial.component.scss"]
+  styleUrls: ["./table-historial.component.scss"],
 })
 export class TableHistorialComponent implements OnInit {
   constructor(private store: Store<AppStateInterface>) {}
   isLoading;
-  historial: HistorialInterface[];
-  filter: string;
-  isfilter;
-  isDownloadHistorial;
+  historial: any;
+  type: string;
+  found: boolean;
 
   ngOnInit(): void {
     this.store
-      .select(SELECT_HISTORIAL_LOADING)
-      .subscribe(loading => (this.isLoading = loading));
+      .select(SELECT_IS_LOADING)
+      .subscribe((loading) => (this.isLoading = loading));
     this.store
-      .select(SELECT_STATE_FILTER)
-      .subscribe(tempFilter => (this.filter = tempFilter));
-    this.store.select(SELECT_IS_FILTER).subscribe(tempIsFilter => {
-      this.isfilter = tempIsFilter;
-      this.historialFilter();
-    });
+      .select(SELECT_HISTORIAL)
+      .subscribe((result) => (this.historial = result));
     this.store
-      .select(SELECT_GENERATE_HISTORIAL)
-      .subscribe(tempDownload => (this.isDownloadHistorial = tempDownload));
-  }
-
-  historialFilter() {
-    this.store.select(SELECT_HISTORIAL).subscribe(tempHistorial => {
-      if (this.isfilter) {
-        this.historial = tempHistorial.filter(temp =>
-          temp.stateHistorial.toLowerCase().includes(this.filter)
-        );
-      } else {
-        this.historial = tempHistorial;
-      }
-    });
-  }
-
-  downloadHistorial() {
-    console.log(this.historial);
-    this.store.dispatch(
-      fromHistorialActions.downloadHistorial({ historial: this.historial })
-    );
+      .select(SELECT_TYPE_MATERIAL)
+      .subscribe((type) => (this.type = type));
+    this.store
+      .select(SELECT_RESULT_LOT_FOUND)
+      .subscribe((found) => (this.found = found));
   }
 }

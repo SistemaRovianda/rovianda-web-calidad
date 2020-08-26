@@ -4,44 +4,30 @@ $base-color: #e2bd53;
 .container {
   background-color: $color-card;
   width: 100%;
-  height: 12%;
+  height: 50px;
   border-radius: 5px;
-  margin-bottom: 3%;
-  position: relative;
+  margin-bottom: 2.5%;
   color: $base-color-text;
+  padding: 1.5% 0;
   .title-document {
-    width: 73%;
+    width: 70%;
     height: 100%;
-    padding: 2.5% 0;
-    position: relative;
-    box-sizing: border-box;
     p {
-      position: absolute;
-      box-sizing: border-box;
-      font-size: 1.1vw;
+      font-size: 1.2vw;
       font-weight: 400;
-      left: 2%;
-
-      margin: 0;
-      width: 98%;
-      height: 50%;
+      margin: auto 0;
       overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
   }
 
   button {
-    position: absolute;
     background-color: $base-color;
-    top: 17.5%;
-    height: 65%;
-    right: 3%;
-    width: 18%;
+    height: 100%;
+    width: 10%;
     color: white;
     font-weight: 100;
     font-size: 1vw;
-    padding: 0.1% 0;
+    margin-right: 2.5%;
     ::ng-deep .mat-progress-spinner circle,
     .mat-spinner circle {
       stroke: white;

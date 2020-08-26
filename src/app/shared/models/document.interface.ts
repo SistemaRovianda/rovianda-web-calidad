@@ -1,4 +1,5 @@
 export interface DocumentInterface {
   name: string;
-  id: number;
+  path: string;
+  dates: boolean;
 }

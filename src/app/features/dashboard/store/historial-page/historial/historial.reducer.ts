@@ -3,36 +3,20 @@ import { HistorialListInterface } from "src/app/shared/models/historial-list.int
 import * as fromActionsHistorial from "./historial.action";
 
 const STATE_INITIAL_HISTORIAL: HistorialListInterface = {
-  historial: [],
+  historial: null,
   loading: false,
   error: null,
-  generateHistorial: false
+  generateHistorial: false,
 };
 
 export const historialReducer = createReducer<HistorialListInterface>(
   STATE_INITIAL_HISTORIAL,
-  on(fromActionsHistorial.startLoadHistorial, state => ({
-    ...state,
-    loading: true
-  })),
-  on(fromActionsHistorial.finishLoadHistorial, state => ({
-    ...state,
-    loading: false
-  })),
   on(fromActionsHistorial.loadHistorial, (state, { historial }) => ({
     ...state,
-    historial
+    historial,
   })),
-  on(fromActionsHistorial.loadHistorialFailure, (state, { error }) => ({
+  on(fromActionsHistorial.emptyHistorial, (state) => ({
     ...state,
-    error
-  })),
-  on(fromActionsHistorial.downloadHistorial, state => ({
-    ...state,
-    generateHistorial: true
-  })),
-  on(fromActionsHistorial.finishDownloadHistorial, state => ({
-    ...state,
-    generateHistorial: false
+    historial: null,
   }))
 );

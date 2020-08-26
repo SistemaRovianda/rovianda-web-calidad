@@ -1,22 +1,23 @@
-<div class="container">
+<div class="container" fxLayout="row" fxLayoutAlign="center end">
   <div class="title-document">
     <p>
       {{ document.name }}
     </p>
   </div>
-
   <button
     fxLayout="row"
     fxLayoutAlign="space-around center"
     mat-button
-    (click)="downloadDocument()"
+    (click)="createExcel()"
   >
-    <span *ngIf="!isDownloadDocument">Descargar</span>
-
-    <mat-spinner
-      style="margin:0 auto;"
-      *ngIf="isDownloadDocument"
-      diameter="25"
-    ></mat-spinner>
+    <span>Excel</span>
+  </button>
+  <button
+    fxLayout="row"
+    fxLayoutAlign="space-around center"
+    mat-button
+    (click)="createPDF()"
+  >
+    <span>PDF</span>
   </button>
 </div>

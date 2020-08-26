@@ -11,43 +11,4 @@ export class DocumentsEffects {
     private action$: Actions,
     private documentService: DocumentsService
   ) {}
-
-  loadDoduments$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(fromDocumentsAction.startLoadDocuments),
-      exhaustMap(action =>
-        this.documentService.getDocuments().pipe(
-          delay(1000),
-          switchMap(documents => [
-            fromDocumentsAction.loadDocuments({ documents }),
-            fromDocumentsAction.finishLoadDocuments()
-          ]),
-          catchError(error =>
-            of(
-              fromDocumentsAction.loadDocumentsFailure(error),
-              fromDocumentsAction.finishLoadDocuments()
-            )
-          )
-        )
-      )
-    )
-  );
-
-  dowloadDocumentEffect$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(fromDocumentsAction.downloadDocument),
-      exhaustMap(action =>
-        this.documentService.downloadDocument(action.document).pipe(
-          delay(500),
-          switchMap(action => [fromDocumentsAction.finishDownloadDocuments()]),
-          catchError(error =>
-            of(
-              fromDocumentsAction.loadDocumentsFailure(error),
-              fromDocumentsAction.finishDownloadDocuments()
-            )
-          )
-        )
-      )
-    )
-  );
 }

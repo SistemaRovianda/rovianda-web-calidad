@@ -1,18 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TableDocumentsComponent } from './table-documents.component';
-import { CardDocumentModule } from '../card-document/card-document.module';
-import { MatProgressSpinnerModule } from '@angular/material';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { TableDocumentsComponent } from "./table-documents.component";
+import { CardDocumentModule } from "../card-document/card-document.module";
+import { MatProgressSpinnerModule } from "@angular/material";
+import { SearchPackagingModule } from "../search-packaging/search-packaging.module";
 
-const COMMON_DECLARATIONS = [TableDocumentsComponent]
+const COMMON_DECLARATIONS = [TableDocumentsComponent];
 
 @NgModule({
   declarations: COMMON_DECLARATIONS,
   imports: [
     CommonModule,
     CardDocumentModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
-  exports: COMMON_DECLARATIONS
+  exports: COMMON_DECLARATIONS,
 })
-export class TableDocumentsModule { }
+export class TableDocumentsModule {}

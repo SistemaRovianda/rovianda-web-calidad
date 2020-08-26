@@ -21,17 +21,22 @@
       </mat-form-field>
       <mat-form-field class="item-form">
         <mat-label class="input-label">Contrase&ntilde;a</mat-label>
-        <input type="password" matInput class="input" formControlName="password" required />
+        <input
+          type="password"
+          matInput
+          class="input"
+          formControlName="password"
+          required
+        />
         <mat-icon svgIcon="lock-svg" matPrefix></mat-icon>
         <mat-error *ngIf="password.errors">
           Por favor ingresa una contraseña válida
-      </mat-error>
-      <mat-error class="error-message" *ngIf="loginForm.errors?.loginError">
-        {{ loginForm.errors.loginError}} Error
-      </mat-error>
+        </mat-error>
+        <mat-error class="error-message" *ngIf="loginForm.errors?.loginError">
+          {{ loginForm.errors.loginError }} Error
+        </mat-error>
       </mat-form-field>
-      
-      <h3 (click)="recoverPassword()" class="recuve-password">Recuperar contrase&ntilde;a</h3>
+
       <button
         class="btn-login"
         fxLayoutAlign="space-around center"
@@ -46,6 +51,9 @@
           diameter="32"
         ></mat-spinner>
       </button>
+      <mat-error class="error-message" *ngIf="loginForm.errors?.loginError">
+        {{ translateError(loginForm.errors.loginError) }}
+      </mat-error>
     </form>
   </div>
 </div>

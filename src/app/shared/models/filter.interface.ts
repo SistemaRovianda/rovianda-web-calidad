@@ -1,4 +1,10 @@
 export interface FilterInterface {
   filter: string;
-  isFiltered: boolean;
+  loading: boolean;
+  typeMaterial: string;
+  error: string;
+  lotFound: boolean;
+  dateIni: string;
+  dateFinal: string;
+  existDates: boolean;
 }

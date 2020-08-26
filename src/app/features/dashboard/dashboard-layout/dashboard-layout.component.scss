@@ -27,37 +27,38 @@ $text-color-secondary: #575552;
         margin-right: 4%;
         color: $text-color;
         transition: 1s;
+
         a {
           display: inline-block;
           height: 100%;
           width: 100%;
         }
       }
-      .active-link{
+      .active-link {
         color: $base-color;
       }
-      .item-exit{
-          color: $text-color-secondary;
-          margin-right: 4.5%;
+      .item-exit {
+        color: $text-color-secondary;
+        margin-right: 4.5%;
       }
-      .icon-exit{
-          float: left;
-          padding: 1% 0;
-          margin: 0;
-          margin-left: 2%;
-          width: 1%;
-          color: $text-color-secondary;
-          font-size: 1.8vw;
-          transition: 1s;
+      .icon-exit {
+        float: left;
+        padding: 1% 0;
+        margin: 0;
+        margin-left: 2%;
+        width: 1%;
+        color: $text-color-secondary;
+        font-size: 1.8vw;
+        transition: 1s;
       }
 
-      .item-menu:hover{
+      .item-menu:hover {
         cursor: pointer;
         color: $base-color;
       }
-      .logout:hover{
+      .logout:hover {
         cursor: pointer;
-        mat-icon{
+        mat-icon {
           color: $base-color;
         }
       }

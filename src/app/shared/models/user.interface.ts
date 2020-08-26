@@ -9,4 +9,6 @@ export interface UserInterface {
   phone?: string;
   type?: string;
   role?: string;
+  currentToken?: string;
+  rol?: string;
 }

@@ -1,0 +1,36 @@
+mat-table{
+    width: 100%;
+}
+.mat-column-number {
+    flex: 0 0 10%;
+}
+.content{
+    width: 100%;
+    height: 100%;
+    .reception, .dateOpen, .dateEnd{
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .dates{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .outputs{
+        width: 100%;
+        h5{
+            text-align: center;
+        }
+        .output{
+            overflow: auto;
+            max-height: 300px;
+            .notFound{
+                margin-top: 20px;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+        }
+    }
+}
