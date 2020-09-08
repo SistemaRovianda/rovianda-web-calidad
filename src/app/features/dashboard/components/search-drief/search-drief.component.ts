@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from "@angular/core";
 export class SearchDriefComponent implements OnInit {
   dataDrief: any;
   @Input() public set drief(data: any) {
-    this.dataDrief = data;
+    this.dataDrief = data[0];
     if (this.dataDrief) this.assignedData(this.dataDrief.outputs);
   }
 

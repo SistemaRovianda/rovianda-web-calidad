@@ -67,33 +67,33 @@ export class TableDocumentsComponent implements OnInit {
       this.documents = [
         {
           name: "Recepcion materia prima cárnicos",
-          path: "/report/document/entry/packing",
+          path: `entry/meat/${localStorage.getItem("historialID")}`,
           dates: false,
         },
         {
           name: "Bitácora de control de calidad formulación",
-          path: "/report/document/entry/packing",
-          dates: false,
+          path: `formulation/${this.state.dateIni}/${this.state.dateFinal}`,
+          dates: true,
         },
 
         {
           name: "Bitácora de control de calidad sala de trabajo",
-          path: "/report/document/entry/packing",
+          path: "process",
           dates: false,
         },
         {
           name: "Bitácora de control de calidad cocimiento del producto",
-          path: "/report/document/entry/packing",
-          dates: false,
+          path: `oven/${this.state.dateIni}/${this.state.dateFinal}`,
+          dates: true,
         },
         {
           name: "Bitácora de control de rebanado y empacado",
-          path: "/report/document/entry/packing",
+          path: "packagin",
           dates: false,
         },
         {
           name: "Inspección de producto terminado y salida",
-          path: "/report/document/entry/packing",
+          path: "report/document/entry/packing",
           dates: false,
         },
       ];

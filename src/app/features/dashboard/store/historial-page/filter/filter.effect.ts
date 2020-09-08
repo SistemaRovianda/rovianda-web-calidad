@@ -31,7 +31,6 @@ export class FilterEffect {
       .subscribe((material) => (this.path = material));
   }
 
-
   searchLot$ = createEffect(() =>
     this.action$.pipe(
       ofType(fromActionsFilter.filterSearchLot),
@@ -40,10 +39,19 @@ export class FilterEffect {
           switchMap((historial) => {
             this.toast.success("Historial de lote obtenido");
             this.path === "packaging"
-              ? localStorage.setItem("historialID", "84")
+              ? localStorage.setItem(
+                  "historialID",
+                  historial[0].entrancePackingId
+                )
               : this.path === "drief"
-              ? localStorage.setItem("historialID", "114")
-              : localStorage.setItem("historialID", "114");
+              ? localStorage.setItem(
+                  "historialID",
+                  historial[0].entranceDriefId
+                )
+              : localStorage.setItem(
+                  "historialID",
+                  historial.entranceMeat[0].entranceMeatId
+                );
             return [
               fromActionsFilter.filterFinishLoading(),
               fromActionsFilter.filterLoadingSuccess(),

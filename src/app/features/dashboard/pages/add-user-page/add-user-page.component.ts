@@ -34,13 +34,16 @@ export class AddUserPageComponent implements OnInit {
     job: ["", [Validators.required]],
   });
   roles: role[] = [
-    { name: "Formulacion", rol: "FORMULATION" },
-    { name: "Horno", rol: "OVEN" },
-    { name: "Enfriamiento", rol: "COOLING" },
+    { name: "Formulación", rol: "FORMULATION" },
+    { name: "Hornos", rol: "OVEN" },
+    { name: "Congelamiento", rol: "COOLING" },
     { name: "Calidad", rol: "QUALITY" },
     { name: "Almacén", rol: "WAREHOUSE" },
-    { name: "Recepcion", rol: "RECEPTION" },
+    { name: "Recepción", rol: "RECEPTION" },
     { name: "Proceso", rol: "PROCESS" },
+    { name: "Empaquetado", rol: "PACKAGING" },
+    { name: "Mantenimiento", rol: "MANTENIMENT" },
+    { name: "Ventas", rol: "SALESUSER" },
   ];
 
   ngOnInit(): void {

@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from "@angular/core";
 export class SearchPackagingComponent implements OnInit {
   _packaging: any;
   @Input() public set packaging(data: any) {
-    this._packaging = data;
+    this._packaging = data[0];
     if (this._packaging) this.assignedData(this._packaging.outputs);
   }
 
