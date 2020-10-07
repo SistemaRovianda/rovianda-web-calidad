@@ -7,13 +7,11 @@
       <mat-form-field class="item-form" appearance="outline">
         <mat-label class="input">Nombre</mat-label>
         <input matInput class="input" formControlName="name" required />
-        <mat-error
-          *ngIf="
+        <mat-error *ngIf="
             name.invalid &&
             !name.errors?.notCharacter &&
             (name.dirty || name.touched)
-          "
-        >
+          ">
           Por favor ingrese un nombre
         </mat-error>
         <mat-error *ngIf="name.errors?.notCharacter">
@@ -23,13 +21,11 @@
       <mat-form-field class="item-form" appearance="outline">
         <mat-label class="input">Apellido Paterno</mat-label>
         <input matInput class="input" formControlName="firstName" required />
-        <mat-error
-          *ngIf="
+        <mat-error *ngIf="
             firstName.invalid &&
             !firstName.errors?.notCharacter &&
             (firstName.dirty || firstName.touched)
-          "
-        >
+          ">
           Por favor ingrese un apellido paterno
         </mat-error>
         <mat-error *ngIf="firstName.errors?.notCharacter">
@@ -42,13 +38,11 @@
       <mat-form-field class="item-form" appearance="outline">
         <mat-label class="input">Apellido Materno</mat-label>
         <input matInput class="input" formControlName="lastName" required />
-        <mat-error
-          *ngIf="
+        <mat-error *ngIf="
             lastName.invalid &&
             !lastName.errors?.notCharacter &&
             (lastName.dirty || lastName.touched)
-          "
-        >
+          ">
           Por favor ingrese un apellido materno
         </mat-error>
         <mat-error *ngIf="lastName.errors?.notCharacter">
@@ -73,32 +67,23 @@
     <div fxLayout="row" fxLayoutAlign="space-around end">
       <mat-form-field class="item-form" appearance="outline">
         <mat-label class="input">Contraseña</mat-label>
-        <input
-          matInput
-          class="input"
-          type="password"
-          formControlName="password"
-          required
-        />
-        <mat-error
-          *ngIf="password.invalid && (password.dirty || password.touched)"
-        >
+        <input matInput class="input" type="password" formControlName="password" required />
+        <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
           Ingrese un contraseña
         </mat-error>
         <mat-error *ngIf="password.touched && password.errors?.whitespace">
           No se aceptan espacios en blanco
         </mat-error>
       </mat-form-field>
+
       <mat-form-field class="item-form" appearance="outline">
         <mat-label class="input">Puesto</mat-label>
         <input matInput class="input" formControlName="job" required />
-        <mat-error
-          *ngIf="
+        <mat-error *ngIf="
             job.invalid &&
             !job.errors?.notCharacter &&
             (job.dirty || job.touched)
-          "
-        >
+          ">
           Ingresar un puesto de trabajo
         </mat-error>
       </mat-form-field>
@@ -107,31 +92,39 @@
     <div fxLayout="row" fxLayoutAlign="space-around end">
       <mat-form-field class="item-form" appearance="outline">
         <mat-label>Tipo de usuario</mat-label>
-        <select matNativeControl formControlName="role" required>
-          <option *ngFor="let option of roles" [value]="option.rol">{{
+        <select (change)="checkTypeSeller()" matNativeControl formControlName="rolId" #role required>
+          <option *ngFor="let option of roles" [value]="option.rolId">{{
             option.name
           }}</option>
         </select>
-        <mat-error *ngIf="role.invalid && (role.dirty || role.touched)">
+        <mat-error *ngIf="rolId.invalid && (rolId.dirty || rolId.touched)">
           Seleccionar un tipo de usuario
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="item-form" appearance="outline">
+        <mat-label class="input">Id vendedor</mat-label>
+        <input matInput class="input" formControlName="clave" readonly />
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around end">
+      <mat-form-field class="item-form" appearance="outline">
+        <mat-label class="input">Comision</mat-label>
+        <input matInput class="input" type="number" formControlName="comision" [disabled]="true" />
+        <mat-error *ngIf="
+            comision.invalid &&
+            (comision.dirty || comision.touched)
+          ">
+          Ingresar un puesto de trabajo
         </mat-error>
       </mat-form-field>
     </div>
 
-    <button
-      fxLayoutAlign="space-around center"
-      (click)="registerUser()"
-      mat-button
-      class="btn-add-user"
-      [disabled]="userForm.invalid"
-      [ngClass]="userForm.invalid ? 'disabled' : 'active'"
-    >
+    <button fxLayoutAlign="space-around center" (click)="createUser()" mat-button class="btn-add-user"
+      [disabled]="userForm.invalid" [ngClass]="userForm.invalid ? 'disabled' : 'active'">
       <span *ngIf="!loading">Registar usuario</span>
-      <mat-spinner
-        class="custom-spinner"
-        *ngIf="loading"
-        diameter="25"
-      ></mat-spinner>
+      <mat-spinner class="custom-spinner" *ngIf="loading" diameter="25"></mat-spinner>
     </button>
   </form>
 </div>

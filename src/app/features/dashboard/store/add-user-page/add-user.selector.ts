@@ -17,3 +17,8 @@ export const SELECT_ADD_USER_RESULT = createSelector(
   ADD_USER_STATE,
   (state) => state.result
 );
+
+export const SELECT_ID_SELLER = createSelector(
+  ADD_USER_STATE,
+  (state) => state.count
+);

@@ -6,11 +6,13 @@ const STATE_INITIAL_ADD_USER_PAGE: AddUserPageInterface = {
   loading: false,
   error: null,
   result: false,
+  count: null
 };
 
 export const addUserReducer = createReducer<AddUserPageInterface>(
   STATE_INITIAL_ADD_USER_PAGE,
   on(fromAddUserActions.addUser, (state) => ({ ...state, loading: true })),
+  on(fromAddUserActions.addSeller, (state) => ({ ...state, loading: true })),
   on(fromAddUserActions.addUserSuccess, (state, { result }) => ({
     ...state,
     result,
@@ -22,5 +24,6 @@ export const addUserReducer = createReducer<AddUserPageInterface>(
   on(fromAddUserActions.addUserFailure, (state, { error }) => ({
     ...state,
     error,
-  }))
+  })),
+  on(fromAddUserActions.loadIdSeller, (state, { count }) => ({ ...state, count }))
 );
