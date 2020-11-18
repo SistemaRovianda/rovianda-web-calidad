@@ -56,6 +56,7 @@ export class AddUserPageComponent implements OnInit {
     { name: "Mantenimiento", rolId: 9 },
     { name: "Ventas", rolId: 10 },
     { name: "Administrador", rolId: 11 },
+    { name: "Linea de quesos", rolId: 12 }
   ];
 
   ngOnInit(): void {
