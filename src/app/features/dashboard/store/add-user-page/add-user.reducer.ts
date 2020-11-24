@@ -6,7 +6,8 @@ const STATE_INITIAL_ADD_USER_PAGE: AddUserPageInterface = {
   loading: false,
   error: null,
   result: false,
-  count: null
+  count: null,
+  warehouses:[]
 };
 
 export const addUserReducer = createReducer<AddUserPageInterface>(
@@ -25,5 +26,6 @@ export const addUserReducer = createReducer<AddUserPageInterface>(
     ...state,
     error,
   })),
-  on(fromAddUserActions.loadIdSeller, (state, { count }) => ({ ...state, count }))
+  on(fromAddUserActions.loadIdSeller, (state, { count }) => ({ ...state, count })),
+  on(fromAddUserActions.setWarehouses,(state,{warehouses})=>({...state,warehouses}))
 );

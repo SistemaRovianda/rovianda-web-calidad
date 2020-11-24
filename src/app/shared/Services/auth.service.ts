@@ -23,10 +23,10 @@ export class AuthService {
   ) {
     this.url = `${endpoint}/user`;
     firebase.initializeApp({
-      apiKey: "AIzaSyDtp99_k4WaCJWR8d4FncfRpkA4sJTt23c",
-      authDomain: "sistema-rovianda.firebaseapp.com",
-      // apiKey: "AIzaSyDaoKnC-MSM0b069pawJ5KI1eWlbmng99o",
-      // authDomain: "rovianda-88249.firebaseapp.com",
+      /*apiKey: "AIzaSyDtp99_k4WaCJWR8d4FncfRpkA4sJTt23c",
+      authDomain: "sistema-rovianda.firebaseapp.com",*/
+       apiKey: "AIzaSyDaoKnC-MSM0b069pawJ5KI1eWlbmng99o",
+       authDomain: "rovianda-88249.firebaseapp.com",
     });
 
     this.auth = firebase.auth();

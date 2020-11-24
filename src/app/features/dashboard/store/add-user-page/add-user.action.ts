@@ -34,3 +34,6 @@ export const finishAddUser = createAction(FINISH_ADD_USER);
 export const getIdSeller = createAction(GET_ID_SELLER);
 
 export const loadIdSeller = createAction(LOAD_ID_SELLER, props<{ count: number }>());
+
+export const loadWarehouses = createAction("[QUALITY] load warehouses");
+export const setWarehouses = createAction("[QUALITY] set warehouses",props<{warehouses:any[]}>());

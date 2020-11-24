@@ -61,6 +61,7 @@ export class AddUserEffects {
         return [
           fromAddUserActions.addUserSuccess({ result: true }),
           fromAddUserActions.finishAddUser(),
+          fromAddUserActions.loadWarehouses()
         ];
       }),
       catchError(error => {
@@ -70,5 +71,13 @@ export class AddUserEffects {
       })
     ))
   ));
+
+  loadWarehouses$= createEffect(()=>this.action$.pipe(
+    ofType(fromAddUserActions.loadWarehouses),
+    exhaustMap((action)=>this.addUserService.getAllWarehouses().pipe(
+      switchMap((response)=>[fromAddUserActions.setWarehouses({warehouses:response as any[]})]),
+      catchError(()=>[fromAddUserActions.setWarehouses({warehouses:[]})])
+    ))
+  ))
 
 }

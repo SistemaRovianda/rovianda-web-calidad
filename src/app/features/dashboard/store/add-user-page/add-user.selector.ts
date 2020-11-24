@@ -22,3 +22,8 @@ export const SELECT_ID_SELLER = createSelector(
   ADD_USER_STATE,
   (state) => state.count
 );
+
+export const SELECT_WAREHOUSES_SELLER = createSelector(
+  ADD_USER_STATE,
+  (state) => state.warehouses
+);

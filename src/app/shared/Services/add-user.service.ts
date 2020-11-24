@@ -31,4 +31,8 @@ export class AddUserService {
   addSeller(seller: AddUser): Observable<any> {
     return this.http.post<any>(`${this.url}/sae/seller`, { ...seller });
   }
+
+  getAllWarehouses(){
+    return this.http.get(`${this.url}/warehouses`);
+  }
 }

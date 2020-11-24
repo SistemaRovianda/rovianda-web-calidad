@@ -3,4 +3,5 @@ export interface AddUserPageInterface {
   error: string;
   result: boolean;
   count?: number;
+  warehouses:any[]
 }

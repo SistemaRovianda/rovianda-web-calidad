@@ -9,8 +9,9 @@ import {
   SELECT_ADD_USER_LOADING,
   SELECT_ADD_USER_RESULT,
   SELECT_ID_SELLER,
+  SELECT_WAREHOUSES_SELLER,
 } from "../../store/add-user-page/add-user.selector";
-import { addSeller, addUser, getIdSeller } from "../../store/add-user-page/add-user.action";
+import { addSeller, addUser, getIdSeller, loadWarehouses } from "../../store/add-user-page/add-user.action";
 import { role } from "src/app/shared/models/role.interface";
 import { notCharacterEspecial } from "src/app/shared/validators/not-character-especial.validator";
 import { ToastrService } from 'ngx-toastr';
@@ -37,13 +38,14 @@ export class AddUserPageComponent implements OnInit {
       rolId: ["", [Validators.required]],
       job: ["", [Validators.required]],
       clave: [""],
-      comision: [{ value: '', disabled: true }]
+      comision: [{ value: '', disabled: true }],
+      warehouse:[{value:null,disabled:true}]
     });
 
   }
   loading;
   userId = 0;
-
+  warehouses:any[]=[];
   roles: role[] = [
     { name: "Recepción", rolId: 1 },
     { name: "Almacén", rolId: 2 },
@@ -60,6 +62,7 @@ export class AddUserPageComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.store.dispatch(loadWarehouses());
     this.store
       .select(SELECT_ADD_USER_LOADING)
       .subscribe((tempLoading) => (this.loading = tempLoading));
@@ -72,6 +75,12 @@ export class AddUserPageComponent implements OnInit {
         this.clave.setValue(+count);
       }
       );
+
+      this.store.select(SELECT_WAREHOUSES_SELLER).subscribe((warehouses)=>{
+        warehouses=warehouses.filter(x=>x.ENCARGADO=="");
+        this.warehouses=warehouses;
+      });
+
   }
 
   get name() {
@@ -110,10 +119,15 @@ export class AddUserPageComponent implements OnInit {
     return this.userForm.get("comision");
   }
 
+  get warehouse(){
+   return this.userForm.get("warehouse");
+  }
+
   checkTypeSeller() {
     if (this.rolId.value == 10) {
       this.store.dispatch(getIdSeller());
       this.comision.enable();
+      this.warehouse.enable()
     } else {
       this.comision.disable();
     }
@@ -128,6 +142,9 @@ export class AddUserPageComponent implements OnInit {
   }
 
   registerSeller() {
+    if(this.warehouse.value==null){
+      this.toast.error("Es necesario agregar almacen para el vendedor")
+    }else
     if (this.comision.value === "") {
       this.toast.error("Es necesario agregar comision")
     } else {

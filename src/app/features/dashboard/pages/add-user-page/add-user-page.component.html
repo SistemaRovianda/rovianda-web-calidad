@@ -111,7 +111,7 @@
     <div fxLayout="row" fxLayoutAlign="space-around end">
       <mat-form-field class="item-form" appearance="outline">
         <mat-label class="input">Comision</mat-label>
-        <input matInput class="input" type="number" formControlName="comision" [disabled]="true" />
+        <input matInput class="input" type="number"  matNativeControl formControlName="comision" [disabled]="true" />
         <mat-error *ngIf="
             comision.invalid &&
             (comision.dirty || comision.touched)
@@ -119,6 +119,21 @@
           Ingresar un puesto de trabajo
         </mat-error>
       </mat-form-field>
+      
+      <mat-form-field class="item-form" appearance="outline" >
+        <mat-label>Almacen</mat-label>
+        
+          <select  formControlName="warehouse" matNativeControl  >
+            <option *ngFor="let warehouseItem of warehouses" [value]="warehouseItem.CVE_ALM">{{
+              warehouseItem.CVE_ALM 
+            }}-{{warehouseItem.DESCR}}</option>
+          </select>
+       
+        
+      </mat-form-field>
+      
+      
+      
     </div>
 
     <button fxLayoutAlign="space-around center" (click)="createUser()" mat-button class="btn-add-user"
