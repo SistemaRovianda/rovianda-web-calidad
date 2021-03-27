@@ -15,14 +15,37 @@
       >
         <a>Historial</a>
       </li>
+      
       <li
         class="item-menu"
-        routerLink="./add-user"
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
+        
       >
-        <a>Agregar usuario</a>
+      <div class="dropdown">
+        <label class="menu-title">
+          Usuarios
+          <ul class="menu-user">
+            <li 
+            routerLink="./add-user"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Registrar</li>
+            <li
+            routerLink="./list-users"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Listado</li>
+          </ul>
+        </label>
+      </div>
       </li>
+      <li
+      class="item-menu"
+      routerLink="./inventario"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a>Inventario</a>
+    </li>
     </ul>
   </div>
   <div class="dashboard-container-pages" fxFlex="92%">

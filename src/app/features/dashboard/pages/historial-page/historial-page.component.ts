@@ -5,6 +5,8 @@ import * as fromActionsFilter from "../../store/historial-page/filter/filter.act
 import { TypeHistorial } from "src/app/shared/models/type-historial.interface";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { filter } from "rxjs/operators";
+import { MatDatepickerInputEvent, MatDialog } from "@angular/material";
+import { TableReceptionsComponent } from "../../components/table-receptions/table-receptions.component";
 
 @Component({
   selector: "app-historial-page",
@@ -14,13 +16,15 @@ import { filter } from "rxjs/operators";
 export class HistorialPageComponent implements OnInit {
   filter: FormGroup;
 
+  dateSelected:string=null;
   constructor(
     private store: Store<AppStateInterface>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog:MatDialog
   ) {
     this.filter = this.fb.group({
       option: ["", [Validators.required]],
-      search: [""],
+      search: ["",[Validators.required]],
     });
   }
 
@@ -43,10 +47,8 @@ export class HistorialPageComponent implements OnInit {
 
   searchElement() {
     if (this.option.value !== "") {
-      this.store.dispatch(
-        fromActionsFilter.filterSearchLot({ lot: this.search.value })
-      );
-    }
+      this.dialog.open(TableReceptionsComponent,{data:{lotId: this.search.value,date:this.dateSelected,type: this.option.value },disableClose:true,width:"800px"});  
+    } 
   }
 
   get option() {
@@ -55,5 +57,14 @@ export class HistorialPageComponent implements OnInit {
 
   get search() {
     return this.filter.get("search");
+  }
+
+  changeDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    console.log(`${type}: ${event.value}`);
+    let date=event.value;
+    let day = date.getDate()<10?'0'+date.getDate():date.getDate();
+    let month = (date.getMonth()+1).toString()
+    let dateStr=date.getFullYear()+"-"+(+month<10?'0'+month:month)+"-"+day;
+    this.dateSelected=dateStr;
   }
 }

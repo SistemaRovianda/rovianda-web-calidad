@@ -28,3 +28,13 @@ export const SELECT_DATES_VALID = createSelector(
   FILTER_STATE,
   (state) => state.existDates
 );
+
+export const getReceptions = createSelector(
+  FILTER_STATE,
+  (state)=>state.receptions
+);
+
+export const getReceptionsDrief = createSelector(
+  FILTER_STATE,
+  (state)=>state.receptionsDrief
+);

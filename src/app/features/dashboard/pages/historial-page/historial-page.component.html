@@ -17,7 +17,7 @@
         </select>
       </mat-form-field>
       <mat-form-field class="item-form" appearance="outline">
-        <mat-label>Buscar</mat-label>
+        <mat-label>Lote</mat-label>
         <input
           matInput
           type="text"
@@ -26,26 +26,40 @@
           formControlName="search"
           [disabled]="option.invalid"
         />
+        
+          
+      </mat-form-field>
+      <mat-form-field color="accent" appearance="fill">
+        <mat-label>A partir de: </mat-label>
+        <input matInput [matDatepicker]="picker1" (dateChange)="changeDate('change', $event)">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      
+      <div class="buttonSearch">
         <button
           mat-icon-button
           matSuffix
           (click)="searchElement()"
-          [disabled]="search.value.length == 0"
+          [disabled]="!(filter.valid && dateSelected!=null)"
         >
-          <mat-icon matSuffix>search</mat-icon>
+        <mat-icon matSuffix>search</mat-icon>
         </button>
-      </mat-form-field>
+      </div>
     </form>
+    
   </div>
+  
   <div fxFlex="85%" fxLayout="row">
+    
     <div fxFlex="45%">
       <app-table-historial></app-table-historial>
     </div>
     <div fxFlex="55%" fxLayout="column">
-      <div fxFlex="25%">
+      <!-- <div fxFlex="25%">
         <app-card-date></app-card-date>
-      </div>
-      <div fxFlex="75%">
+      </div> -->
+      <div fxFlex="100%">
         <app-table-documents></app-table-documents>
       </div>
     </div>

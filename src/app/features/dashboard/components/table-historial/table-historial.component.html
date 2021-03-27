@@ -4,6 +4,10 @@
       <h1 class="header-date">Accion</h1>
       <h1 class="header-state">Fecha</h1>
     </div>
+    <div>
+      A partir de la recepción:<br>
+      
+    </div>
     <div class="container-card">
       <div
         *ngIf="isLoading"
@@ -15,15 +19,20 @@
       <div *ngIf="!isLoading">
         <app-search-packaging
           *ngIf="type === 'packaging' && found"
-          [packaging]="historial"
+          [packaging]="entrances"
         ></app-search-packaging>
         <app-search-drief
           *ngIf="type === 'drief' && found"
-          [drief]="historial"
+          [drief]="entrances"
         ></app-search-drief>
         <history-list
           *ngIf="type === 'meat' && found"
-          [meat]="historial"
+          [entrances]="entrances"
+          [cooling]="cooling"
+          [outputsCooling]="outputsCooling"
+          [formulations]="formulations"
+          [process]="process"
+          [oven]="oven"
         ></history-list>
       </div>
     </div>

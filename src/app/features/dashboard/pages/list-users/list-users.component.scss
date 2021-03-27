@@ -1,0 +1,29 @@
+.list-user-container{
+    width: 90%;
+    height: 90%; 
+    background-color: white;
+    margin-left: 5%;
+    margin-top: 30px;
+}
+.title{
+    text-align: center;
+    margin: 0%;
+}
+.table{
+    width: 100%;
+}
+.table-container{
+    width: 100%;
+    height: 700px;
+    overflow-y: scroll;
+}
+.loader{
+   display: block;
+   width: 100%;
+}
+.load-div{
+    text-align: -webkit-center;
+}
+.search{
+    float: right;
+}

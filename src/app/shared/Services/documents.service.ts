@@ -6,6 +6,7 @@ import { API_ENPOINT_PROVIDER } from "src/app/providers/tokens";
 import { AppStateInterface } from "../models/app-state.interface";
 import { Store } from "@ngrx/store";
 import { selectUID } from "src/app/features/landing/store/user/user.selector";
+import { AuthService } from "./auth.service";
 
 @Injectable({ providedIn: "root" })
 export class DocumentsService {

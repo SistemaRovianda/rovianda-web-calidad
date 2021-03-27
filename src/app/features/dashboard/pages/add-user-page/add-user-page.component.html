@@ -124,9 +124,8 @@
         <mat-label>Almacen</mat-label>
         
           <select  formControlName="warehouse" matNativeControl  >
-            <option *ngFor="let warehouseItem of warehouses" [value]="warehouseItem.CVE_ALM">{{
-              warehouseItem.CVE_ALM 
-            }}-{{warehouseItem.DESCR}}</option>
+            <option *ngFor="let warehouseItem of warehouses" [value]="warehouseItem.CVE_ALM">
+              {{warehouseItem.CVE_ALM }}-{{warehouseItem.ENCARGADO}}</option>
           </select>
        
         

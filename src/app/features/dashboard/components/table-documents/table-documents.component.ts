@@ -67,34 +67,34 @@ export class TableDocumentsComponent implements OnInit {
       this.documents = [
         {
           name: "Recepcion materia prima cárnicos",
-          path: `entry/meat/${localStorage.getItem("historialID")}`,
+          path: `entry/meat/${this.filter}`,
           dates: false,
         },
         {
           name: "Bitácora de control de calidad formulación",
-          path: `formulation/${this.state.dateIni}/${this.state.dateFinal}`,
+          path: `formulation/${this.state.dateIni}/${this.state.dateFinal}/${this.filter}`,
           dates: true,
         },
 
         {
           name: "Bitácora de control de calidad sala de trabajo",
-          path: "process",
-          dates: false,
+          path: `process?dateStart=${this.state.dateIni}&dateEnd=${this.state.dateFinal}&entranceId=${this.filter}`,
+          dates: true,
         },
         {
           name: "Bitácora de control de calidad cocimiento del producto",
-          path: `oven/${this.state.dateIni}/${this.state.dateFinal}`,
+          path: `oven/${this.state.dateIni}/${this.state.dateFinal}/${this.filter}`,
           dates: true,
         },
         {
           name: "Bitácora de control de rebanado y empacado",
-          path: "packagin",
-          dates: false,
+          path: `packaging/${this.state.dateIni}/${this.state.dateFinal}/${this.filter}`,//"packagin"
+          dates: true,
         },
         {
           name: "Inspección de producto terminado y salida",
-          path: "report/document/entry/packing",
-          dates: false,
+          path: `ended-product/${this.state.dateIni}/${this.state.dateFinal}/${this.filter}`,//"report/document/entry/packing"
+          dates: true,
         },
       ];
     } else if (this.typeMaterial === "drief") {

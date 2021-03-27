@@ -27,10 +27,24 @@ const ROUTES: Routes = [
         }
       },
       {
+        path: "inventario",
+        loadChildren: () =>
+          import("./pages/inventory/inventory.module").then(
+            m => m.InventoryModule
+          )
+      },
+      {
         path: "add-user",
         loadChildren: () =>
           import("./pages/add-user-page/add-user-page.module").then(
             m => m.AddUserPageModule
+          )
+      },
+      {
+        path: "list-users",
+        loadChildren: () =>
+          import("./pages/list-users/list-users.module").then(
+            m => m.ListUsersModule
           )
       },
       {

@@ -70,3 +70,26 @@ $text-color-secondary: #575552;
     background-image: linear-gradient($secondary-color 85%, $base-color 15%);
   }
 }
+
+.menu-title:hover> .menu-user{
+  display: block;
+  visibility: visible;
+}
+.menu-title{
+  z-index: 1;
+}
+.menu-user{
+  visibility: hidden;
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+  position: fixed;
+  background-color: white;
+}
+.menu-user>li:hover{
+  color: gray;
+}
+.dropdown{
+  position: relative;
+  display: inline-block;
+}

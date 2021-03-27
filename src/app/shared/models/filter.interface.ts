@@ -1,3 +1,5 @@
+import { HistorialReception, HistorialReceptionDrief } from "./historial-list.interface";
+
 export interface FilterInterface {
   filter: string;
   loading: boolean;
@@ -7,4 +9,7 @@ export interface FilterInterface {
   dateIni: string;
   dateFinal: string;
   existDates: boolean;
+  receptions:HistorialReception[],
+  receptionsDrief:HistorialReceptionDrief[],
+  receptionsPacking:any[]
 }

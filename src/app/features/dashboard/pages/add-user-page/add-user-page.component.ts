@@ -30,11 +30,11 @@ export class AddUserPageComponent implements OnInit {
     private toast: ToastrService
   ) {
     this.userForm = this.fb.group({
-      name: ["", [Validators.required, notCharacterEspecial]],
-      firstName: ["", [Validators.required, notCharacterEspecial]],
-      lastName: ["", [Validators.required, notCharacterEspecial]],
-      email: ["", [Validators.required, noWhiteSpace, emailValidator]],
-      password: ["", [Validators.required, noWhiteSpace]],
+      name: ["", [Validators.required]],
+      firstName: ["", [Validators.required]],
+      lastName: ["", [Validators.required]],
+      email: ["", [Validators.required, emailValidator]],
+      password: ["", [Validators.required]],
       rolId: ["", [Validators.required]],
       job: ["", [Validators.required]],
       clave: [""],
@@ -72,12 +72,13 @@ export class AddUserPageComponent implements OnInit {
     this.store
       .select(SELECT_ID_SELLER)
       .subscribe(count => {
+        count++;
         this.clave.setValue(+count);
       }
       );
 
       this.store.select(SELECT_WAREHOUSES_SELLER).subscribe((warehouses)=>{
-        warehouses=warehouses.filter(x=>x.ENCARGADO=="");
+        warehouses=warehouses.filter(x=>(x.ENCARGADO==null || !((x.ENCARGADO as string).includes("ASSIGNED") || x.CVE_ALM==53)));
         this.warehouses=warehouses;
       });
 

@@ -1,4 +1,4 @@
-import { Injectable, Inject } from "@angular/core";
+import { Injectable, Inject, HostListener } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { Observable, from } from "rxjs";
@@ -23,13 +23,25 @@ export class AuthService {
   ) {
     this.url = `${endpoint}/user`;
     firebase.initializeApp({
-      /*apiKey: "AIzaSyDtp99_k4WaCJWR8d4FncfRpkA4sJTt23c",
-      authDomain: "sistema-rovianda.firebaseapp.com",*/
-       apiKey: "AIzaSyDaoKnC-MSM0b069pawJ5KI1eWlbmng99o",
-       authDomain: "rovianda-88249.firebaseapp.com",
+      apiKey: "AIzaSyDtp99_k4WaCJWR8d4FncfRpkA4sJTt23c",
+      authDomain: "sistema-rovianda.firebaseapp.com",
+       /*apiKey: "AIzaSyDaoKnC-MSM0b069pawJ5KI1eWlbmng99o",
+       authDomain: "rovianda-88249.firebaseapp.com",*/
     });
+    
 
     this.auth = firebase.auth();
+    //this.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  }
+
+  @HostListener('window:beforeunload')
+  closeSession(){
+    localStorage.clear();
+    this.auth.signOut()
+  }
+
+  getCurrentUser(){
+    return this.auth.currentUser;
   }
 
   signIn(email: string, password: string): Observable<any> {

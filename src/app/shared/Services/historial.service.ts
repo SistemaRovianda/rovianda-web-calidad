@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
-import { HistorialListInterface } from "../models/historial-list.interface";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { HistorialListInterface, HistorialReception } from "../models/historial-list.interface";
 import { HistorialInterface } from "../models/historial.interface";
 import { environment } from "src/environments/environment";
 import { Observable } from "rxjs";
@@ -55,8 +55,34 @@ export class HistorialService {
     });
   }
 
-  searchLot(lot: string, path: string): Observable<any> {
-    return this.http.get<any>(`${this.url}/history/${path}/${lot}`);
+  searchEntrances(entranceId: string,dateStart:string,dateEnd:string, path: string): Observable<any> {
+    let params = new HttpParams().set("dateStart",dateStart).set("dateEnd",dateEnd);
+    return this.http.get<any>(`${this.url}/history/${path}/${entranceId}`,{params});
+  }
+
+
+  searchCoolingOfEntrance(entranceId: number,dateStart:string,dateEnd:string): Observable<any> {
+    let params = new HttpParams().set("dateStart",dateStart).set("dateEnd",dateEnd);
+    return this.http.get<any>(`${this.url}/history/meat-cooling/${entranceId}`,{params});
+  }
+
+  searchOutputsCoolingOfEntrance(entranceId: number,dateStart:string,dateEnd:string): Observable<any> {
+    let params = new HttpParams().set("dateStart",dateStart).set("dateEnd",dateEnd);
+    return this.http.get<any>(`${this.url}/history/meat-out-cooling/${entranceId}`,{params});
+  }
+  searchOutputsFormulationOfEntrance(outputs:number[]): Observable<any> {
+    return this.http.post<any>(`${this.url}/history/meat-formulations`,{outputsCooling:outputs});
+  }
+  searchOutputsProcessOfEntrance(formulationsIds:number[]): Observable<any> {
+    return this.http.post<any>(`${this.url}/history/meat-process`,{formulationsIds});
+  }
+
+  searchOutputsOvenOfEntrance(processIds:number[]): Observable<any> {
+    return this.http.post<any>(`${this.url}/history/meat-oven`,{processIds});
+  }
+
+  searchLotDrief(entranceId:string,path:string){
+    return this.http.get<any>(`${this.url}/history/${path}/${entranceId}`);
   }
 
   downloadHistorialService(historial: HistorialInterface[]): Observable<any> {
@@ -65,5 +91,10 @@ export class HistorialService {
       observer.next(historial);
       observer.complete();
     });
+  }
+
+  getReceptionsHistory(lotId:string,date:string):Observable<HistorialReception[]>{
+    let params = new HttpParams().set("date",date);
+    return this.http.get<HistorialReception[]>(`${this.url}/entrances/${lotId}`,{params});
   }
 }
