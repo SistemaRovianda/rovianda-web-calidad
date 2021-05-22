@@ -11,7 +11,7 @@ export class AddUserEffects {
   constructor(
     private action$: Actions,
     private addUserService: AddUserService,
-    private toastr: ToastrService
+    private toastr: c
   ) { }
 
   addUserEffect$ = createEffect(() =>
