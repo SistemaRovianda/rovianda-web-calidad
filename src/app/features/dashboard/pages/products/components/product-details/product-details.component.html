@@ -1,0 +1,49 @@
+<div *ngIf="productDetails!=null" class="container">
+    <div class="close-icon-container">
+        <button mat-raised-button color="default" (click)="back()">
+            <mat-icon class="icon-close" >arrow_back</mat-icon>
+            regresar
+        </button>
+    </div>
+    <label class="product-name">Producto: {{productDetails.name}}</label><br>
+    <label class="presentations-title">Presentaciones</label>
+    <div class="presentations">
+        <div class="table-presentations-headers">
+            <div class="table-presentations-header">Presentación</div>
+            <div class="table-presentations-header">Código</div>
+        </div>
+        <div class="table-presentations">
+            
+            <div class="table-presentations-rows" *ngFor="let presentation of productDetails.presentations">
+                <div class="table-presentations-row">{{presentation.presentation}}</div>
+                <div class="table-presentations-row">{{presentation.code}}</div>
+            </div>
+        </div>
+    </div>
+    <label class="presentations-title">Ingredientes</label>
+    <div class="ingredients">
+        <div class="table-ingredients-headers">
+            <div class="table-ingredients-header">Producto</div>
+            <div class="table-ingredients-header">Marca</div>
+            <div class="table-ingredients-header">Presentación</div>
+            <div class="table-ingredients-header">Acciones</div>
+        </div>
+        <div class="table-ingredients">
+            
+            <div class="table-ingredients-rows" *ngFor="let ingredient of productDetails.ingredients">
+                <div class="table-ingredients-row">{{ingredient.productName}}</div>
+                <div class="table-ingredients-row">{{ingredient.mark}}</div>
+                <div class="table-ingredients-row">{{ingredient.presentation}}</div>
+                <div class="table-ingredients-row">
+                    <button mat-raised-button color="warn" (click)="removeIngredient(ingredient)">Eliminar</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isLoading">
+            <mat-spinner style="margin-left: 45%"></mat-spinner>
+        </div>
+        <div class="button-add-ingredient-container">
+            <button mat-raised-button color="primary" (click)="addIngredient()">Agregar Ingrediente</button>
+        </div>
+    </div>
+</div>

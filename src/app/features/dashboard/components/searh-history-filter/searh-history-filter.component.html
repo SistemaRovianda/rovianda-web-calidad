@@ -1,0 +1,70 @@
+<div class="filter-search">
+    <form class="form-filter" [formGroup]="form">
+      <div class="part-filter input">
+        <div class="section">
+        <mat-form-field class="example-full-width input" appearance="fill">
+          <mat-label>Lote</mat-label>
+          <input type="text" matInput formControlName="lote"
+                 placeholder="Ej. 1234">
+        </mat-form-field>
+       
+        <mat-form-field appearance="fill" class="input" >
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="type">
+              <mat-option *ngFor="let item of typesFilter" [value]="item.value">{{item.str}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        </div>
+
+        <div class="part-filter input">
+          <div class="datepickers-container center">
+          <div class=" date-start-selector">
+            <div>
+              <div>
+                <div class="date-picker-container">
+                <label>Desde:</label>
+              </div>
+              <div class="date-picker-container">
+                <mat-icon (click)="openStartDate()">event</mat-icon>
+              </div>
+              <div class="date-picker-container">
+                {{parseDateStr(dateStartStr)}}
+              </div>
+              <input matInput [matDatepicker]="datepickerstart" class="invisible" (dateChange)="dateStartChange($event)">
+              <mat-datepicker #datepickerstart></mat-datepicker>
+            </div>
+          </div>
+          </div>
+          
+          <div class=" date-end-selector">
+            <div>
+              <div>
+                <div class="date-picker-container">
+                <label>Hasta:</label>
+              </div>
+              <div class="date-picker-container">
+                <mat-icon (click)="openEndDate()">event</mat-icon>
+              </div>
+              <div class="date-picker-container">
+                {{parseDateStr(dateEndStr)}}
+              </div>
+              <input matInput [matDatepicker]="datepickerend" class="invisible" (dateChange)="dateEndChange($event)">
+              <mat-datepicker #datepickerend></mat-datepicker>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+        <div class="part-filter-end input">
+          <div class="center"> 
+            <div [class]="isLoading?'search-button-disabled':'search-button'" (click)="search()">
+            <mat-icon>search</mat-icon>
+          </div>
+          </div>
+        </div>
+      </form>
+      <div class="input part-filter-spinner">
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+      </div>
+</div>

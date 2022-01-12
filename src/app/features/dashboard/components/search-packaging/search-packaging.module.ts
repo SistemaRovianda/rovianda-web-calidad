@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SearchPackagingComponent } from "./search-packaging.component";
-import { MatTableModule } from "@angular/material";
+import { MatTableModule } from "@angular/material/table";
 
 const COMMON_DECLARATIONS = [SearchPackagingComponent];
 

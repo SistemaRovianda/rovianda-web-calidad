@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AppStateInterface } from "src/app/shared/models/app-state.interface";
 import { Store } from "@ngrx/store";
 import { filterLoadDates } from "../../store/historial-page/filter/filter.action";
-import * as moment from "moment";
+import moment from "moment";
 
 @Component({
   selector: "app-card-date",

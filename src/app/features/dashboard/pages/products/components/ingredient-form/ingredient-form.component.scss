@@ -1,0 +1,48 @@
+.row{
+    display: flex;
+}
+.row>div{
+    display: inline-block;
+}
+.list-ingredients-headers{
+    background-color: #2771d6;
+    display: flex;
+    
+}
+.list-ingredients-header{
+    display: inline-block;
+    width: 20%;
+    text-align: center;
+    color: white;
+}
+.list-ingredients-rows{
+    display: flex;
+    width: 100%;
+}
+.list-ingredients-row{
+    display: inline-block;
+    width: 20%;
+    text-align: center;
+    margin-top: 10px;
+}
+.list-rows-container{
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.ingredients-section{
+    display: flex;
+}
+.ingredient-section{
+    display: inline-block;
+    width: 47.5%;
+}
+.ingredient-section-end{
+    display: inline-block;
+    width: 47.5%;
+    margin-left: 5%;
+}
+.list-header-ingredients-title{
+    width: 100%;
+    text-align: center;
+}

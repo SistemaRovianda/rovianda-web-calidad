@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { ItemUser, ItemUserEdit } from 'src/app/shared/models/list-users.interface';
 import { PlantService } from 'src/app/shared/Services/plant.service';
 

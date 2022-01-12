@@ -1,0 +1,281 @@
+<div class="container">
+    <div class="filter-product">
+        <label class="item product-label">Producto</label>
+        <form [formGroup]="form" class="item">
+        <mat-form-field appearance="fill">
+            <mat-select formControlName="product">
+              <mat-option *ngFor="let product of products" [value]="product">
+                {{product}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+        <button mat-raised-button color="default" class="select-product-button" (click)="searchReceptions()">Seleccionar</button>
+    </div>
+    <div>
+        <div class="table-header">
+            <div class="table-header-item"><label class="header">Fecha</label></div>
+            <div class="table-header-item"><label class="header">Proveedor</label></div>
+            <div class="table-header-item"><label class="header">Producto</label></div>
+            <div class="table-header-item"><label class="header">Lote Interno</label></div>
+            <div class="table-header-item"><label class="header">proveedor</label> </div>
+            <div class="table-header-item"><label class="header">Evidencia</label></div>
+            <div class="table-header-item"><label class="header">Estatus</label></div>
+            <div class="table-header-item"><label class="details-section">Detalles</label></div>
+        </div>
+
+        <mat-expansion-panel class="table-body-row" *ngFor="let row of rows">
+            <mat-expansion-panel-header >
+                <div class="table-header-item-body"><label class="header"> {{parseDateStr(row.date)}}</label></div>
+                <div class="table-header-item-body"><label class="header">{{row.provider}}</label></div>
+                <div class="table-header-item-body"><label class="header">{{row.productName}}</label></div>
+                <div class="table-header-item-body"><label class="header">{{row.lotIntern}}</label></div>
+                <div class="table-header-item-body"><label class="header">{{row.lotProvider}}</label></div>
+                <div class="table-header-item-body" *ngIf="row.evidence!=''"><label class="header"><a href="{{row.evidence}}" target="_blank"><mat-icon>visibility</mat-icon></a></label></div>
+                <div class="table-header-item-body"><label class="header">{{row.status}}</label></div>
+                <div class="table-header-item-body" *ngIf="row.evidence==''"><label class="header"><mat-icon>visibility_off</mat-icon></label></div>
+                
+            </mat-expansion-panel-header>
+            <mat-panel-description class="table-body-row-body">
+              <mat-horizontal-stepper linear="false">
+                <mat-step label="Recepción">
+                  
+                <div class="details-inspection-container" *ngIf="row.qualityInspector">
+                    <label>Inspeccionado por: {{row.qualityInspector}}</label>
+                </div>
+                <div class="properties-sections">
+
+                  
+                    <mat-expansion-panel *ngFor="let property of row.propertiesEvaluated" class="details-properties-row">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title >
+                            <div style="width: 100%; display: flex;">
+                                <div class="item-property-title">{{property.property}}</div>
+                                <label class="item-property-title" *ngIf="property.value">{{property.value}}</label>
+                                <label class="item-property-title">Aceptado</label>
+                                <mat-checkbox  class="item-property-title" [checked]="property.accepted" [disabled]="true"></mat-checkbox>
+                                <div class="item-property-title">Observaciones/Descripción</div>
+                            </div>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-panel-description>
+                            {{property.observations}}
+                          </mat-panel-description>
+                      </mat-expansion-panel>
+
+                      <div class="button-reports-section">
+                        <div [class]="isLoading?'pdf-report-button-disabled':'pdf-report-button'" (click)="downLoadReport(row.entranceId,'pdf')">
+                            <mat-icon class="icon">picture_as_pdf</mat-icon>
+                        </div>
+                        <div [class]="isLoading?'excel-report-button-disabled':'excel-report-button'" (click)="downLoadReport(row.entranceId,'excel')">
+                            <img class="icon-excel" src="assets/icon-reports/file-excel-solid.svg"/>
+                        </div>
+                      </div>
+                      
+                </div>
+              </mat-step>
+              <mat-step >
+                <ng-template matStepLabel >
+                  <label (click)="getOutputsToFormulation(row.entranceId,row.pageIndex,'normal',0)">Salidas a formulación</label>
+                </ng-template>
+                  <div *ngIf="row.outputsToFormulation">
+                      <div class="headers-table-outputs-formulation">
+                        <div class="header-title">Fecha</div>
+                        <div class="header-title">Estatus</div>
+                        <div class="header-title">Lote asignado</div>
+                        <div class="header-title">Tipo</div>
+                        <div class="header-title">Producto de lote</div>
+                        <div class="header-title">Verificado por:</div>
+                        <div class="header-title">Realizado por:</div>
+                      </div>
+                      
+                      <mat-expansion-panel *ngFor="let output of row.outputsToFormulation" class="details-properties-row">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title >
+                            <div class="rows-table-outputs-formulation" >
+                              <div class="row-output-formulation">{{parseDateStr(output.date)}}</div>
+                              <div class="row-output-formulation">{{output.status=="TAKED"?"UTILIZADO":"NO UTILIZADO"}}</div>
+                              <div class="row-output-formulation">{{output.lotDay}}</div>
+                              <div class="row-output-formulation">{{output.typeFormulation=="INGREDIENT"?"INGREDIENTE":"PRODUCTO"}}</div>
+                              <div class="row-output-formulation">{{output.name}}</div>
+                              <div class="row-output-formulation">{{output.verifyBy}}</div>
+                              <div class="row-output-formulation">{{output.makedBy}}</div>
+                            </div>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-panel-description class="container-ingredients-layout">
+                          <div class="container-ingredients-header">
+                            <div class="container-ingredients-header-item">Producto</div>
+                            <div class="container-ingredients-header-item">Lote proveedor</div>
+                            <div class="container-ingredients-header-item">Fecha de salida</div>
+                            <div class="container-ingredients-header-item">Observaciones</div>
+                          </div>
+                          <div class="container-ingredients-body" *ngFor="let ingredient of output.ingredients">
+                            <div class="container-ingredients-body-item">{{ingredient.productName}}</div>
+                            <div class="container-ingredients-body-item">{{ingredient.lotProvider}}</div>
+                            <div class="container-ingredients-body-item">{{ingredient.dateOutput}}</div>
+                            <div class="container-ingredients-body-item">{{ingredient.observations}}</div>
+                          </div>
+                          <div class="container-ingredients-body">
+                            <div>
+                              <button mat-raised-button class="footer-container-expansion-panel-button"  (click)="selectFormulationProcess(0,row.entranceId,output)" matStepperNext>Ir a proceso</button>
+                              <button mat-raised-button  [disabled]="isLoading" (click)="getReportFormulation(output.id)">Descargar Reporte</button>
+                            </div>
+                          </div>
+                          </mat-panel-description>
+                      </mat-expansion-panel>
+
+                      <div class="footer-table-outputs-formulation">
+                        
+                          <div class="page-indicator">Pagina: {{row.pageIndex+1}}</div>
+                          <div class="paginator-indicator">{{row.pageIndex*10}} - {{((row.pageIndex+1)*10 > row.totalFormulations)?row.totalFormulations:(row.pageIndex+1)*10}}/{{row.totalFormulations}}</div>
+                          <div class="paginator-end-controls">
+                            <mat-icon (click)="getOutputsToFormulation(row.entranceId,row.pageIndex,'previous',row.totalFormulations)">navigate_before</mat-icon>
+                            <mat-icon (click)="getOutputsToFormulation(row.entranceId,row.pageIndex,'next',row.totalFormulations)">navigate_next</mat-icon>
+                          </div>
+                        
+                      </div>
+                      
+                  </div>
+              </mat-step>
+              <mat-step >
+                <ng-template matStepLabel >
+                  <label (click)="selectFormulationProcess(0,row.entranceId,null)">Procesos</label>
+                </ng-template>
+                  <div *ngIf="row.outputsToFormulation">
+
+                      <div class="headers-table-outputs-process">
+                        <div class="header-title-output-process">Fecha de creación:</div>
+                        <div class="header-title-output-process">Producto</div>
+                        <div class="header-title-output-process">Tipo</div>
+                        <div class="header-title-output-process">Lote</div>
+                        <div class="header-title-output-process">Último proceso:</div>
+                        <div class="header-title-output-process">Estatus:</div>
+                      </div>
+                      <mat-expansion-panel *ngFor="let pro of process" class="details-properties-row">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title >
+                        <div class="row-table-outputs-process">{{parseDateStr(pro.createAt)}}</div>
+                        <div class="row-table-outputs-process">{{pro.productName}}</div>
+                        <div class="row-table-outputs-process">{{pro.typeProcess=="INGREDIENT"?"INGREDIENTE":"PRODUCTO"}}</div>
+                        <div class="row-table-outputs-process">{{pro.lotDay}}</div>
+                        <div class="row-table-outputs-process">{{pro.currentProcess}}</div>
+                        <div class="row-table-outputs-process">{{pro.status=="ACTIVE"?"ACTIVO":"PREPARADO"}}</div>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-panel-description > 
+                        <div>
+                          <button mat-raised-button (click)="getOvenByProcessId(pro.id,0,row.entranceId,0)" matStepperNext>Ir a horno</button>
+                          <button mat-raised-button  [disabled]="isLoading" (click)="getReportProcess(pro.id)">Descargar Reporte</button>
+                        </div> 
+                    </mat-panel-description>
+                    </mat-expansion-panel>
+                      <div class="footer-table-outputs-formulation">
+                        
+                        <div class="page-indicator">Pagina: {{row.pageIndexProcess+1}}</div>
+                        <div class="paginator-indicator">{{row.pageIndexProcess*10}} - {{((row.pageIndexProcess+1)*10 > row.totalProcess)?row.totalProcess:(row.pageIndexProcess+1)*10}}/{{row.totalProcess}}</div>
+                        <div class="paginator-end-controls">
+                          <mat-icon (click)="getProcessOfEntranceId(row.entranceId,row.pageIndexProcess,'previous',row.totalProcess)">navigate_before</mat-icon>
+                          <mat-icon (click)="getProcessOfEntranceId(row.entranceId,row.pageIndexProcess,'next',row.totalProcess)">navigate_next</mat-icon>
+                        </div>
+                      
+                    </div>
+                  </div>
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel >
+                  <label (click)="getOvenByProcessId(null,0,row.entranceId,row.totalOvens)">Hornos</label>
+                </ng-template>
+                <div class="headers-outputs-ovens">
+                  <div class="header-output-oven">Producto</div>
+                  <div class="header-output-oven">Lote</div>
+                  <div class="header-output-oven">Fecha</div>
+                  <div class="header-output-oven">Estatus</div>
+                  <div class="header-output-oven">Horno</div>
+                  <div class="header-output-oven">PCC</div>
+                  <div class="header-output-oven">Tiempo estimado</div>
+                  <div class="header-output-oven">Observaciones</div>
+                </div>
+                <mat-expansion-panel *ngFor="let oven of ovens" class="details-properties-row">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title >
+                      
+                        <div class="row-output-ovens">{{oven.productName}}</div>
+                        <div class="row-output-ovens">{{oven.newLote}}</div>
+                        <div class="row-output-ovens">{{parseDateStr(oven.date)}}</div>
+                        <div class="row-output-ovens">{{oven.status=="USED"?"CERRADO":"ABIERTO"}}</div>
+                        <div class="row-output-ovens">{{oven.oven}}</div>
+                        <div class="row-output-ovens">{{oven.pcc}}</div>
+                        <div class="row-output-ovens">{{oven.estimatedTime}}</div>
+                        <div class="row-output-ovens">{{oven.observations}}</div>
+                    
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-panel-description >  
+                    <div>
+                      <button mat-raised-button  [disabled]="isLoading" (click)="getReportOven(oven.id)">Descargar Reporte</button>
+                    </div>
+                  </mat-panel-description>
+                  </mat-expansion-panel>
+                  <div class="footer-table-outputs-formulation">
+                        
+                    <div class="page-indicator">Pagina: {{row.pageIndexOvens+1}}</div>
+                    <div class="paginator-indicator">{{row.pageIndexOvens*10}} - {{((row.pageIndexOvens+1)*10 > row.totalOvens)?row.totalOvens:(row.pageIndexOvens+1)*10}}/{{row.totalOvens}}</div>
+                    <div class="paginator-end-controls">
+                      <mat-icon (click)="getOvenByProcessId(null,(row.pageIndexOvens-1),row.entranceId,row.totalOvens)">navigate_before</mat-icon>
+                      <mat-icon (click)="getOvenByProcessId(null,(row.pageIndexOvens+1),row.entranceId,row.totalOvens)">navigate_next</mat-icon>
+                    </div>
+                  
+                </div>
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel >
+                  <label (click)="getPackingByOven(null,0,row.entranceId,0)">Producto terminado</label>
+                </ng-template>
+                <div>
+                  
+                </div>
+                <div class="headers-outputs-product-ended">
+                  <div class="header-output-product-ended">Producto</div>
+                  <div class="header-output-product-ended">Lote</div>
+                  <div class="header-output-product-ended">Fecha de alta</div>
+                  <div class="header-output-product-ended">Caducidad</div>
+                  <div class="header-output-product-ended">Cantidad</div>
+                </div>
+
+                <mat-expansion-panel *ngFor="let productEnded of productsEnded" class="details-properties-row">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title >
+                      
+                        <div class="header-output-product-ended">{{productEnded.productName}} {{productEnded.presentation}}</div>
+                        <div class="header-output-product-ended">{{productEnded.lotId}}</div>
+                        <div class="header-output-product-ended">{{parseDateStr(productEnded.registerDate)}}</div>
+                        <div class="header-output-product-ended">{{parseDateStr(productEnded.expiration)}}</div>
+                        <div class="header-output-product-ended">{{productEnded.uniMed=="PZ"?productEnded.outputOfWarehouse:productEnded.weightOfWarehouse}}</div>
+                    
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-panel-description >  
+                    <button mat-raised-button color="primary" [disabled]="isLoading" (click)="downLoadReportProductEnded(productEnded.id)"> Reporte de trazabilidad </button>
+                    <button mat-raised-button  [disabled]="isLoading" (click)="getReportPackaging(productEnded.packagingId)">Descargar Reporte</button>
+                  </mat-panel-description>
+                  </mat-expansion-panel>
+                  <div class="footer-table-outputs-formulation">
+                        
+                    <div class="page-indicator">Pagina: {{row.pageIndexProductEnded+1}}</div>
+                    <div class="paginator-indicator">{{row.pageIndexProductEnded*10}} - {{((row.pageIndexProductEnded+1)*10 > row.totalProductEnded)?row.totalProductEnded:(row.pageIndexProductEnded+1)*10}}/{{row.totalProductEnded}}</div>
+                    <div class="paginator-end-controls">
+                      <mat-icon (click)="getPackingByOven(null,(row.pageIndexProductEnded-1),row.entranceId,row.totalProductEnded)">navigate_before</mat-icon>
+                      <mat-icon (click)="getPackingByOven(null,(row.pageIndexProductEnded+1),row.entranceId,row.totalProductEnded)">navigate_next</mat-icon>
+                    </div>
+
+                    </div>
+              </mat-step>
+              </mat-horizontal-stepper>
+
+              </mat-panel-description>
+            
+          </mat-expansion-panel>
+        
+    </div>
+</div>

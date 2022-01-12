@@ -6,3 +6,4 @@ export const selectUser = (state: AppStateInterface) => state.user;
 export const selectUID = createSelector(selectUser, state => state.uid);
 
 export const selectUserRole = createSelector(selectUser, state => state.role);
+export const selectEmail = createSelector(selectUser,state=>state.email);

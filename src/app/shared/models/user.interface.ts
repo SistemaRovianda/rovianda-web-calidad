@@ -12,3 +12,10 @@ export interface UserInterface {
   currentToken?: string;
   rol?: string;
 }
+
+
+export interface CodeAccess{
+  codeAccessId:number,
+  userId:string,
+  code:string
+}

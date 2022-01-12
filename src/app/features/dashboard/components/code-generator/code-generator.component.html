@@ -1,0 +1,8 @@
+<div>
+    <div class="container">
+        <h3>Generación de código de edición</h3>
+        <label>Tu código es: {{codeAccess?codeAccess.code:'#####'}}</label>
+        <button mat-raised-button [disabled]="isLoading" (click)="generateCode()"> Generar código</button>
+        <mat-spinner [diameter]="70" class="spinner" *ngIf="isLoading"></mat-spinner>
+    </div>
+</div>

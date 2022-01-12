@@ -5,8 +5,13 @@ import * as fromActionsFilter from "../../store/historial-page/filter/filter.act
 import { TypeHistorial } from "src/app/shared/models/type-historial.interface";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { filter } from "rxjs/operators";
-import { MatDatepickerInputEvent, MatDialog } from "@angular/material";
+
 import { TableReceptionsComponent } from "../../components/table-receptions/table-receptions.component";
+import { MatDialog } from "@angular/material/dialog";
+import { MatDatepickerInputEvent } from "@angular/material/datepicker";
+import { HistorialService } from "src/app/shared/Services/historial.service";
+import { EntranceOutputPackingFromOven, ReceptionMaterialInterface } from "src/app/shared/models/reception-materials.interface";
+import { ModalSelectFormatComponent } from "../../components/modal-select-format/modal-select-format.component";
 
 @Component({
   selector: "app-historial-page",
@@ -14,50 +19,33 @@ import { TableReceptionsComponent } from "../../components/table-receptions/tabl
   styleUrls: ["./historial-page.component.scss"],
 })
 export class HistorialPageComponent implements OnInit {
-  filter: FormGroup;
+  form: FormGroup;
 
   dateSelected:string=null;
+  productsEnded:EntranceOutputPackingFromOven[]=[];
+  pageIndexProductEnded=0;
+  totalProductEnded=0;
   constructor(
     private store: Store<AppStateInterface>,
     private fb: FormBuilder,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private historyService:HistorialService
   ) {
-    this.filter = this.fb.group({
-      option: ["", [Validators.required]],
-      search: ["",[Validators.required]],
+    this.form = this.fb.group({
+      product: ["", [Validators.required]],
     });
   }
 
-  options: TypeHistorial[] = [
-    { name: "Carnicos", value: "meat" },
-    { name: "Secos", value: "drief" },
-    { name: "Empaques", value: "packaging" },
-  ];
 
+  isLoading:boolean=false;
   ngOnInit(): void {}
 
-  selectType() {
-    this.store.dispatch(
-      fromActionsFilter.filterSelectMAterial({
-        typeMaterial: this.option.value,
-      })
-    );
-  
+
+
+  get product() {
+    return this.form.get("product");
   }
 
-  searchElement() {
-    if (this.option.value !== "") {
-      this.dialog.open(TableReceptionsComponent,{data:{lotId: this.search.value,date:this.dateSelected,type: this.option.value },disableClose:true,width:"800px"});  
-    } 
-  }
-
-  get option() {
-    return this.filter.get("option");
-  }
-
-  get search() {
-    return this.filter.get("search");
-  }
 
   changeDate(type: string, event: MatDatepickerInputEvent<Date>) {
     console.log(`${type}: ${event.value}`);
@@ -67,4 +55,135 @@ export class HistorialPageComponent implements OnInit {
     let dateStr=date.getFullYear()+"-"+(+month<10?'0'+month:month)+"-"+day;
     this.dateSelected=dateStr;
   }
+  typeFilter:string="";
+  products:string[]=[];
+  currentRequest:{lot:string,type:string,dateStart:string,dateEnd:string};
+  lotSelected:string="";
+  dateStartSelected:string="";
+  dateEndSelected:string="";
+  searchProductsBylotAndDate(event:any){
+    if(!this.isLoading){
+      this.currentRequest={...event};
+      this.isLoading=true;
+      this.typeFilter=event.type;
+      this.lotSelected=event.lot;
+      this.dateStartSelected=event.dateStart;
+      this.dateEndSelected=event.dateEndSelected;
+      this.historyService.getProductsByLotAndDate(event.lot,event.type,event.dateStart,event.dateEnd).subscribe((results)=>{
+        this.products=results;
+        this.isLoading=false;
+      },(err)=>{
+        this.products=[];
+        this.isLoading=false;
+      });
+    }
+  }
+
+  getProductEndedHistory(){
+    if(!this.isLoading){
+      if(this.form.valid){
+        this.isLoading=true;
+        this.historyService.getProductEndedHistory(this.pageIndexProductEnded,10,this.lotSelected,this.product.value,this.dateStartSelected,this.dateEndSelected).subscribe((products)=>{
+          this.productsEnded=products.items;
+          this.totalProductEnded=products.count;
+          this.isLoading=false;
+        },(err)=>{
+          this.isLoading=false;
+        })
+      }
+    }
+    
+  }
+  receptions:ReceptionMaterialInterface[]=[];
+
+
+  searchProductSelected(event:any){
+      if(!this.isLoading){
+        this.isLoading=true;
+        this.historyService.getReceptionsOfProduct(this.currentRequest.lot,this.currentRequest.type,this.currentRequest.dateStart,this.currentRequest.dateEnd,event).subscribe((receptions)=>{
+          this.receptions=receptions;
+          this.isLoading=false;
+        },(err)=>{
+          this.receptions=[];
+          this.isLoading=false;
+        })
+      };
+  }
+
+  getReportEntrance(event:{entranceId:number,type:string}){
+    if(!this.isLoading){
+      if(this.currentRequest.type=="MEAT"){
+        if(event.type=="pdf"){
+          this.isLoading=true;
+          this.historyService.getReportOfReceptionMeat(event.entranceId).subscribe((response)=>{
+              this.openReport(response);
+              this.isLoading=false;
+          },(err)=>{
+            this.isLoading=false;
+          });
+        }else{
+          this.isLoading=true;
+          this.historyService.getReportExcelOfReceptionMeat(event.entranceId).subscribe((response)=>{
+              this.downloadFile(response);
+              this.isLoading=false;
+          },(err)=>{
+            this.isLoading=false;
+          });
+        }
+      }else if(this.currentRequest.type=="DRIEF"){
+        if(event.type=="pdf"){
+          this.isLoading=true;
+          this.historyService.getReportOfReceptionDrief(event.entranceId).subscribe((response)=>{
+            this.openReport(response);
+            this.isLoading=false;
+        },(err)=>{
+          this.isLoading=false;
+        });
+      }
+        else{
+          this.isLoading=true;
+          this.historyService.getReportExcelOfReceptionDrief(event.entranceId).subscribe((response)=>{
+            this.downloadFile(response);
+            this.isLoading=false;
+        },(err)=>{
+          this.isLoading=false;
+        });
+        }
+      }
+  }
+  }
+
+  setLoading(loading:boolean){
+    this.isLoading=loading;
+  }
+
+
+  downLoadReportProductEnded(packId:number){
+    this.dialog.open(ModalSelectFormatComponent,{
+      data: {
+        packId,
+        type: 1
+      }
+    })
+   
+  }
+
+  
+
+  openReport(response:any){
+    let file = new Blob([response], { type: 'application/pdf' });
+    var fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
+  }
+  downloadFile(data: any){
+    var url = window.URL.createObjectURL(new Blob([data]));
+     var a = document.createElement('a');
+     document.body.appendChild(a);
+     a.setAttribute('style', 'display: none');
+     a.href = url;
+     a.download = `Entrada.xlsx`;
+     a.click();
+     window.URL.revokeObjectURL(url);
+     a.remove(); // remove the element
+   }
 }

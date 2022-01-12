@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "sistema-rovianda"
+  },
+  "targets": {
+    "sistema-rovianda": {
+      "hosting": {
+        "rovianda-web-calidad": [
+          "sistema-rovianda"
+        ]
+      }
+    }
   }
 }

@@ -5,13 +5,15 @@ import { DashboardLayoutComponent } from "./dashboard-layout.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {
   MatCardModule,
-  MatFormFieldModule,
-  MatButtonModule,
-  MatInputModule,
-  MatIconModule,
-  MatProgressSpinnerModule
-} from "@angular/material";
+  
+} from "@angular/material/card";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from "@angular/material/input";
+import { MatIconModule } from "@angular/material/icon";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+
 
 const DECLARATIONS = [DashboardLayoutComponent];
 

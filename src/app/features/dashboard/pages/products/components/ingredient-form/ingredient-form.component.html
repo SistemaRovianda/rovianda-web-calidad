@@ -1,0 +1,99 @@
+<div>
+    <div style="width: 100%; display: block;text-align: right;">
+  
+    <mat-icon (click)="close()">close</mat-icon>
+    </div>
+    <div>
+        <mat-radio-group aria-label="Selecciona una opción" [(ngModel)]="selection" style="display: block;text-align: center;">
+        <mat-radio-button value="1">Registrar</mat-radio-button>
+        <mat-radio-button value="2">Añadir del listado</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div *ngIf="selection==1">
+        <div class="form" [formGroup]="form">
+            <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Producto</mat-label>
+                <input matInput formControlName="productName">
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Marca</mat-label>
+                <input matInput formControlName="mark">
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Variante</mat-label>
+                <input matInput formControlName="variant">
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Presentación</mat-label>
+                <input matInput formControlName="presentation">
+              </mat-form-field>
+            </div>
+            
+        </div>
+        <div class="row">
+            <mat-radio-group aria-label="Selecciona una opción" [(ngModel)]="typeRegist" style="display: block;text-align: center;">
+                <mat-radio-button value="1">Enlazado a producto actual</mat-radio-button>
+                <mat-radio-button value="2">Registro aislado</mat-radio-button>
+              </mat-radio-group>
+        </div>
+        <div *ngIf="!isLoading">
+            <button mat-raised-button color="primary" (click)="regist()">Registrar</button>
+        </div>
+    </div>
+    <div *ngIf="selection==2" class="ingredients-section">
+        <div class="ingredient-section">
+                <div class="form2">
+                    <div class="list-header-ingredients-title">Listado ingredientes</div>
+                    <div class="list-ingredients-headers">
+                        <div class="list-ingredients-header">Nombre</div>
+                        <div class="list-ingredients-header">Marca</div>
+                        <div class="list-ingredients-header">Variante</div>
+                        <div class="list-ingredients-header">Presentación</div>
+                        <div class="list-ingredients-header">Opciones</div>
+                    </div>
+                    <div class="list-rows-container">  
+                        <div class="list-ingredients-rows" *ngFor="let ingredient of ingredients; let index=index">
+                            <div class="list-ingredients-row">{{ingredient.productName}}</div>
+                            <div class="list-ingredients-row">{{ingredient.mark}}</div>
+                            <div class="list-ingredients-row">{{ingredient.variant}}</div>
+                            <div class="list-ingredients-row">{{ingredient.presentation}}</div>
+                            <div class="list-ingredients-row">
+                                <mat-icon (click)="addRemove(ingredient,'ADD',index)">add_circle</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div> 
+        <div class="ingredient-section-end">
+            <div class="form2">
+                <div class="list-header-ingredients-title">Ingredientes añadidos</div>
+                <div class="list-ingredients-headers">
+                    <div class="list-ingredients-header">Nombre</div>
+                    <div class="list-ingredients-header">Marca</div>
+                    <div class="list-ingredients-header">Variante</div>
+                    <div class="list-ingredients-header">Presentación</div>
+                    <div class="list-ingredients-header">Opciones</div>
+                </div>
+                <div class="list-rows-container">  
+                    <div class="list-ingredients-rows" *ngFor="let ingredient of ingredientsAdded; let index=index">
+                        <div class="list-ingredients-row">{{ingredient.productName}}</div>
+                        <div class="list-ingredients-row">{{ingredient.mark}}</div>
+                        <div class="list-ingredients-row">{{ingredient.variant}}</div>
+                        <div class="list-ingredients-row">{{ingredient.presentation}}</div>
+                        <div class="list-ingredients-row">
+                            <mat-icon (click)="addRemove(ingredient,'REMOVE',index)">remove_circle</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div><!-- end ingredients sections-->
+    <div *ngIf="isLoading">
+        <mat-spinner style="margin-left: 45%"></mat-spinner>
+    </div>
+</div>

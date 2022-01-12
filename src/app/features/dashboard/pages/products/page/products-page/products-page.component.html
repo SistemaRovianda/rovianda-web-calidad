@@ -1,0 +1,16 @@
+<div style="height: 92%;">
+    <div class="table-products">
+        <div class="table-products-headers">
+            <div class="table-product-header">Producto</div>
+            <div class="table-product-header">Estatus</div>
+            <div class="table-product-header">Opciones</div>
+        </div>
+        <div class="table-products-rows" *ngFor="let product of products">
+            <div class="table-product-row">{{product.name}}</div>
+            <div class="table-product-row">{{product.status==1?'ACTIVO':'INACTIVO'}}</div>
+            <div class="table-product-row">
+                <button mat-raised-button color="default" (click)="openDetails(product.id)">Detalles</button>
+            </div>
+        </div>
+    </div>
+</div>

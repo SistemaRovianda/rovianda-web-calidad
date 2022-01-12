@@ -1,72 +1,543 @@
 
 <div class="container-inventory">
     <h1 class="title">Inventario</h1>
-    <div class="loader" *ngIf="loadingTable">
+    <div class="searcher-container" >
+    <div [formGroup]="form" class="form">
+      <div class="form-input" *ngIf="section!=8">
+      <mat-form-field appearance="fill">
+        <mat-label>Desde</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="form-input" *ngIf="section!=8">
+      <mat-form-field appearance="fill">
+        <mat-label>Hasta</mat-label>
+        <input matInput [matDatepicker]="picker2" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="form-input" *ngIf="section!=8 && section!=9">
+      <mat-form-field appearance="fill">
+        <mat-label>Lote</mat-label>
+        <input matInput formControlName="lot">
+      </mat-form-field>
+    </div>
+    <div class="form-input" *ngIf="section==3">
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="type">
+          <mat-option value="MEAT">Carnicos</mat-option>
+          <mat-option value="DRIEF">Secos</mat-option>
+          <mat-option value="PACKING">Empaques</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-input" *ngIf="section==10">
+      <mat-form-field appearance="fill">
+        <mat-label>Vendedor</mat-label>
+        <mat-select formControlName="seller">
+          <mat-option *ngFor="let seller of sellers" value="{{seller.id}}" >{{seller.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="button-search-container">
+      <button mat-raised-button (click)="searchInventory()"> Buscar </button>
+    </div>
+    </div>
+  </div>
+    <div class="loader" *ngIf="isLoading">
         <div class="load-div">
             <mat-spinner [diameter]=100></mat-spinner>
         </div>
     </div>
-    <div class="table-container" *ngIf="!loadingTable">
-
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
-
-           
-          
-            <!-- Name Column -->
-            <ng-container matColumnDef="product">
-              <th mat-header-cell *matHeaderCellDef> Producto </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-          
-            <!-- Weight Column -->
-            <ng-container matColumnDef="presentation">
-              <th mat-header-cell *matHeaderCellDef> Presentación </th>
-              <td mat-cell *matCellDef="let element"> {{element.type_presentation}} </td>
-            </ng-container>
-          
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="lot">
-              <th mat-header-cell *matHeaderCellDef> Lote </th>
-              <td mat-cell *matCellDef="let element"> {{element.lot_id}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="units">
-                <th mat-header-cell *matHeaderCellDef> Unidades </th>
-                <td mat-cell *matCellDef="let element" >
-                    <mat-form-field class="example-form-field" *ngIf="element.editing">
-                        <mat-label>Unidades</mat-label>
-                        <input matInput type="number" [(ngModel)]="element.unitsTemp">
-                      </mat-form-field>
-                       <label *ngIf="!element.editing">{{element.unitsTemp}}</label>
-                     </td>
-              </ng-container>
-              <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef> Peso </th>
-             
-                <td mat-cell *matCellDef="let element"> 
-                    <mat-form-field class="example-form-field" *ngIf="element.editing">
-                        <mat-label>Peso</mat-label>
-                        <input matInput type="number" [(ngModel)]="element.weightTemp">
-                      </mat-form-field>
-                    <label *ngIf="!element.editing">{{element.weightTemp}}</label>
-                 </td>
-              </ng-container>
-
-              <ng-container matColumnDef="options">
-                <th mat-header-cell *matHeaderCellDef> Opciones </th>
-                <td mat-cell *matCellDef="let element;let index=index">
-                    <button *ngIf="!element.editing && !element.isUpdating" mat-raised-button (click)="edit(index)" >Editar</button>
-                    <button *ngIf="element.editing && !element.isUpdating" mat-raised-button (click)="save(index)">Guardar</button>
-                    <button *ngIf="element.editing && !element.isUpdating" mat-raised-button color="warn" (click)="cancel(index)">Cancelar</button>
-                    <mat-spinner [diameter]=20 *ngIf="element.isUpdating"></mat-spinner>
-                </td>
-              </ng-container>
-          
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-          
-          
-
+    <div >
+      <mat-tab-group (selectedIndexChange)="getType($event)">
+        <mat-tab label="Carnicos" class="tab">
+            <div class="table-meat-headers">
+              <div class="table-meat-header">Fecha de recepción</div>
+              <div class="table-meat-header">Producto</div>
+              <div class="table-meat-header">Estatus</div>
+              <div class="table-meat-header">Lote Interno</div>
+              <div class="table-meat-header">Provedor</div>
+              <div class="table-meat-header">Lote Provedor</div>
+              <div class="table-meat-header">Cantidad</div>
+              <div class="table-meat-header">Recibió</div>
+              <div class="table-meat-header">Enfriador</div>
+              <div class="table-meat-header">Temperatura</div>
+              <div class="table-meat-header">Opciones</div>
+            </div>
+            <div class="table-meat-rows" *ngFor="let item of inventoryMeat; let index=index">
+              <div class="table-meat-row">{{parseDateStr(item.createAt)}}</div>
+              <div class="table-meat-row">{{item.description}}</div>
+              <div class="table-meat-row">
+                <div *ngIf="item.isEditing">
+                  <select [(ngModel)]="item.statusTemp">
+                    <option value="OPENED" >ABIERTO</option>
+                    <option value="CLOSED">CERRADO</option>
+                  </select>
+                </div>
+               <div *ngIf="!item.isEditing">{{item.status=="OPENED"?"ABIERTO":"CERRADO"}}</div>
+              </div>
+              <div class="table-meat-row">
+                <div *ngIf="item.isEditing">
+                  <input type="text" [(ngModel)]="item.lotInternTemp" value="item.lotIntern" style="width: 70px;">
+                </div>
+                <div *ngIf="!item.isEditing">{{item.lotIntern}}</div>
+              </div>
+              <div class="table-meat-row">
+               {{item.provider}}
+              </div>
+              <div class="table-meat-row">
+                <div *ngIf="item.isEditing">
+                  <input type="text" style="width: 70%;" [(ngModel)]="item.lotProviderTemp" value="item.lotProvider">
+                </div>
+                <div *ngIf="!item.isEditing">{{item.lotProvider}}</div>
+              </div>
+              <div class="table-meat-row">
+                <div *ngIf="item.isEditing">
+                  <input type="text" [(ngModel)]="item.quantityTemp" value="item.quantity" style="width: 70px;">
+                </div>
+                <div *ngIf="!item.isEditing">{{item.quantity}}</div>
+              </div>
+              <div class="table-meat-row">{{item.receiver}}</div>
+              <div class="table-meat-row">
+                <div *ngIf="item.isEditing">
+                  <select [(ngModel)]="item.fridgeIdTemp" value="item.fridgeId">
+                    <option *ngFor="let fridge of fridges" [value]="fridge.fridge_id" >{{fridge.temp}} {{fridge.description}}</option>
+                  </select>
+                </div>
+                <div *ngIf="!item.isEditing">{{item.fridgeDescription}}</div>
+              </div>
+              <div class="table-meat-row">
+                
+                {{item.temp}}
+              </div>
+              <div class="table-meat-row">
+                <button mat-raised-button (click)="editRecord('MEAT',index)" *ngIf="!item.isEditing">Editar</button>
+                <button mat-raised-button (click)="saveEdit('MEAT',index)" *ngIf="item.isEditing">Guardar</button>
+                <button mat-raised-button (click)="getReport(item.id,index)" *ngIf="!item.isLoading" >Reporte</button>
+                  <mat-spinner [diameter]="40" *ngIf="item.isLoading"></mat-spinner>
+              </div>
+            </div>
+            <div class="table-paginator"> 
+              <div class="page-label">Página: {{pageIndexMeat+1}}</div>
+              <div class="page-total-count">{{paginator(pageIndexMeat,pageTotalMeat)}}</div>
+              <div class="page-control">
+                <mat-icon (click)="ant()">navigate_before</mat-icon>
+                <mat-icon (click)="next()">navigate_next</mat-icon>
+              </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Secos">
+              <div class="table-drief-headers">
+                <div class="table-drief-header">Fecha de recepción</div>
+                <div class="table-drief-header">Producto</div>
+                <div class="table-drief-header">Proveedor</div>
+                <div class="table-drief-header">Lote Proveedor</div>
+                <div class="table-drief-header">Estatus</div>
+                <div class="table-drief-header">Cantidad</div>
+                <div class="table-drief-header">Recibió</div>
+                <div class="table-drief-header">Opciones</div>
+              </div>
+              <div class="table-drief-rows" *ngFor="let item of inventoryDrief; let index=index">
+                <div class="table-drief-row">{{parseDateStr(item.createAt)}}</div>
+                <div class="table-drief-row">{{item.description}}</div>
+                <div class="table-drief-row">{{item.provider}}</div>
+                <div class="table-drief-row">
+                  <div *ngIf="item.isEditing">
+                    <input type="text" [(ngModel)]="item.lotProviderTemp" value="item.lotProvider">
+                  </div>
+                  <div *ngIf="!item.isEditing">
+                    {{item.lotProvider}}
+                  </div>
+                </div>
+                <div class="table-drief-row">
+                    <div *ngIf="item.isEditing">
+                      
+                      <select [(ngModel)]="item.statusTemp">
+                        <option value="OPENED" >ABIERTO</option>
+                        <option value="CLOSED">CERRADO</option>
+                      </select>
+                    </div>
+                  <div *ngIf="!item.isEditing">
+                    {{item.status=='OPENED'?'ABIERTO':'CERRADO'}}   
+                  </div>
+                  </div>
+                <div class="table-drief-row">
+                  <div *ngIf="item.isEditing">
+                    <input type="number" [(ngModel)]="item.quantityTemp" value="item.quantity">
+                  </div>
+                 <div *ngIf="!item.isEditing">{{item.quantity}}</div>
+                </div>
+                <div class="table-drief-row">{{item.receiver}}</div>
+                <div class="table-drief-row">
+                  <button mat-raised-button (click)="editRecord('DRIEF',index)" *ngIf="!item.isEditing">Editar</button>
+                  <button mat-raised-button (click)="saveEdit('DRIEF',index)" *ngIf="item.isEditing">Guardar</button>
+                  <button mat-raised-button (click)="getReport(item.id,index)" *ngIf="!item.isLoading" >Reporte</button>
+                  <mat-spinner [diameter]="40" *ngIf="item.isLoading"></mat-spinner>
+                </div>
+              </div>
+              <div class="table-paginator"> 
+                <div class="page-label">Página: {{pageIndexDrief+1}}</div>
+                <div class="page-total-count">{{ paginator(pageIndexDrief,pageTotalDrief)}} </div>
+                <div class="page-control">
+                  <mat-icon (click)="ant()">navigate_before</mat-icon>
+                  <mat-icon (click)="next()">navigate_next</mat-icon>
+                </div>
+              </div>
+        </mat-tab>
+        <mat-tab label="Empaques">
+            <div class="table-packing-headers">
+              <div class="table-packing-header">Fecha de recepción</div>
+              <div class="table-packing-header">Producto</div>
+              <div class="table-packing-header">Estatus</div>
+              <div class="table-packing-header">Proveedor</div>
+              <div class="table-packing-header">Lote Proveedor</div>
+              <div class="table-packing-header">Cantidad</div>
+              <div class="table-packing-header">Recibió</div>
+              <div class="table-packing-header">Opciones</div>
+            </div>
+            <div class="table-packing-rows" *ngFor="let item of inventoryPacking; let index=index">
+              <div class="table-packing-row">{{parseDateStr(item.createAt)}}</div>
+              <div class="table-packing-row">{{item.description}}</div>
+              <div class="table-packing-row">{{item.status=="OPENED"?"ABIERTO":(item.status=="CLOSED"?"CERRADO":"NO ABIERTO")}}</div>
+              <div class="table-packing-row">{{item.provider}}</div>
+              <div class="table-packing-row">{{item.lotProvider}}</div>
+              <div class="table-packing-row">{{item.quantity}}</div>
+              <div class="table-packing-row">{{item.receiver}}</div>
+              <div class="table-packing-row">
+                <button mat-raised-button (click)="getReport(item.id,index)" *ngIf="!item.isLoading" >Reporte</button>
+                  <mat-spinner [diameter]="40" *ngIf="item.isLoading"></mat-spinner>
+              </div>
+            </div>
+            <div class="table-paginator"> 
+              <div class="page-label">Página: {{pageIndexPacking+1}}</div>
+              <div class="page-total-count">{{ paginator(pageIndexPacking,pageTotalPacking) }}</div>
+              <div class="page-control">
+                <mat-icon (click)="ant()">navigate_before</mat-icon>
+                <mat-icon (click)="next()">navigate_next</mat-icon>
+              </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Salidas de almacén">
+            <div class="table-outputs-meat" *ngIf="type.value=='MEAT'">
+              <div class="table-outputs-meat-headers">
+                <div class="table-outputs-meat-header">Producto</div>
+                <div class="table-outputs-meat-header">Fecha de salida</div>
+                <div class="table-outputs-meat-header">Cantidad</div>
+                <div class="table-outputs-meat-header">Estatus</div>
+                <div class="table-outputs-meat-header">Lote</div>
+                
+              </div>
+              <div class="table-outputs-meat-rows" *ngFor="let output of outputsWarehouses">
+                <div class="table-outputs-meat-row">{{output.name}}</div>
+                <div class="table-outputs-meat-row">{{parseDateStr(output.outputDate)}}</div>
+                <div class="table-outputs-meat-row">{{output.quantity}}</div>
+                <div class="table-outputs-meat-row">{{output.status=='TAKED'?'USADO':'SIN USAR'}}</div>
+                <div class="table-outputs-meat-row">{{output.lot}}</div>
+              </div>
+            </div>
+            <div class="table-outputs-drief" *ngIf="type.value=='DRIEF'">
+              <div class="table-outputs-drief-headers">
+                <div class="table-outputs-drief-header">Producto</div>
+                <div class="table-outputs-drief-header">Fecha de salida</div>
+                <div class="table-outputs-drief-header">Estatus</div>
+                <div class="table-outputs-drief-header">Lote</div>
+              </div>
+              <div class="table-outputs-drief-rows" *ngFor="let output of outputsWarehouses">
+                <div class="table-outputs-drief-row">{{output.name}}</div>
+                <div class="table-outputs-drief-row">{{output.outputDate}}</div>
+                <div class="table-outputs-drief-row">{{output.status=='USED'?'USADO':'SIN USAR'}}</div>
+                <div class="table-outputs-drief-row">{{output.lot}}</div>
+              </div>
+            </div>
+            <div class="table-outputs-packing" *ngIf="type.value=='PACKING'">
+              <div class="table-outputs-packing-headers">
+                <div class="table-outputs-packing-header">Producto</div>
+                <div class="table-outputs-packing-header">Fecha de salida</div>
+                <div class="table-outputs-packing-header">Lote</div>
+              </div>
+              <div class="table-outputs-packing-rows" *ngFor="let output of outputsWarehouses">
+                <div class="table-outputs-packing-row">{{output.name}}</div>
+                <div class="table-outputs-packing-row">{{output.outputDate}}</div>
+                <div class="table-outputs-packing-row">{{output.lot}}</div>
+              </div>
+            </div>
+            <div class="table-paginator"> 
+              <div class="page-label">Página: {{pageIndexOutputs+1}}</div>
+              <div class="page-total-count">{{ paginator(pageIndexOutputs,pageTotalOutputs) }}</div>
+              <div class="page-control">
+                <mat-icon (click)="ant()">navigate_before</mat-icon>
+                <mat-icon (click)="next()">navigate_next</mat-icon>
+              </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Formulación">
+          <div class="table-formulations"> 
+            <div class="table-formulations-headers">
+              <div class="table-formulations-header">Producto</div>
+              <div class="table-formulations-header">Estatus</div>
+              <div class="table-formulations-header">Lote de día</div>
+              <div class="table-formulations-header">Tipo</div>
+              <div class="table-formulations-header">Verificado por</div>
+              <div class="table-formulations-header">Hecho por</div>
+              <div class="table-formulations-header">Detalles</div>
+            </div>
+            <div class="table-formulations-rows" *ngFor="let formulation of formulations">
+              <div class="table-formulations-row">{{formulation.name}}</div>
+              <div class="table-formulations-row">{{formulation.status=='UNUSED'?"SIN USO":'USADO'}}</div>
+              <div class="table-formulations-row">{{formulation.lotDay}}</div>
+              <div class="table-formulations-row">{{formulation.type=='INGREDIENT'?'INGREDIENTE':'PRODUCTO'}}</div>
+              <div class="table-formulations-row">{{formulation.verifyBy}}</div>
+              <div class="table-formulations-row">{{formulation.makedBy}}</div>
+              <div class="table-formulations-row"><mat-icon (click)="getFormulationReport(formulation.id)">description</mat-icon></div>
+            </div>
+          </div>
+          <div class="table-paginator"> 
+            <div class="page-label">Página: {{pageIndexFormulation}}</div>
+            <div class="page-total-count">{{ paginator(pageIndexFormulation,pageTotalFormulation)}}</div>
+            <div class="page-control">
+              <mat-icon (click)="ant()">navigate_before</mat-icon>
+              <mat-icon (click)="next()">navigate_next</mat-icon>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Proceso">
+            <div class="table-process-headers">
+              <div class="table-process-header">Producto</div>
+              <div class="table-process-header">Lote</div>
+              <div class="table-process-header">Proceso</div>
+              <div class="table-process-header">Tipo</div>
+              <div class="table-process-header">Estatus</div>
+              <div class="table-process-header">Fecha de creación</div>
+              <div class="table-process-header">Opciones</div>
+            </div>
+            <div class="table-process-rows" *ngFor="let pro of process; let index=index;">
+              <div class="table-process-row">{{pro.name}}</div>
+              <div class="table-process-row">{{pro.lotDay}}</div>
+              <div class="table-process-row">{{pro.currentProcess}}</div>
+              <div class="table-process-row">{{pro.typeProcess=='INGREDIENT'?'INGREDIENTE':'PRODUCTO'}}</div>
+              <div class="table-process-row">{{pro.statusProcess=='COOKING'?'COCINADO':'COCINANDO'}}</div>
+              <div class="table-process-row">{{parseDateStr(pro.createAt)}}</div>
+              <div class="table-process-row">
+                <button mat-raised-button (click)="getReport(pro.id,index)" *ngIf="!pro.isLoading" >Reporte</button>
+                  <mat-spinner [diameter]="40" *ngIf="pro.isLoading"></mat-spinner>
+              </div>
+            </div>
+            <div class="table-paginator"> 
+              <div class="page-label">Página: {{pageIndexProcess+1}}</div>
+              <div class="page-total-count">{{ paginator(pageIndexProcess,pageTotalProcess) }}</div>
+              <div class="page-control">
+                <mat-icon (click)="ant()">navigate_before</mat-icon>
+                <mat-icon (click)="next()">navigate_next</mat-icon>
+              </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Hornos">
+          <div class="table-ovens-headers">
+            <div class="table-ovens-header">Producto</div>
+            <div class="table-ovens-header">Lote del dia</div>
+            <div class="table-ovens-header">Lote asignado</div>
+            <div class="table-ovens-header">Estatus Horno</div>
+            <div class="table-ovens-header">Estatus para bascula</div>
+            <div class="table-ovens-header">Fecha de creación</div>
+            <div class="table-ovens-header">Opciones</div>
+          </div>
+          <div class="table-ovens-rows" *ngFor="let oven of ovens;let index=index">
+            <div class="table-ovens-row">{{oven.name}}</div>
+            <div class="table-ovens-row">{{oven.antLot}}</div>
+            <div class="table-ovens-row">
+              <div *ngIf="oven.isEditing">
+                <input type="text" [(ngModel)]="oven.newLotTemp" value="oven.newLot">
+              </div>
+              <div *ngIf="!oven.isEditing">
+                {{oven.newLot}}
+              </div>
+            </div>
+            <div class="table-ovens-row">{{(oven.status=='CLOSED' || oven.status=='USED')?'CERRADO':'ABIERTO'}}</div>
+            <div class="table-ovens-row">
+              <div *ngIf="oven.isEditing && (oven.status=='CLOSED' || oven.status=='USED')">
+                <select *ngIf="oven.isEditing"  [(ngModel)]="oven.statusTemp">
+                  <option value="CLOSED">ABIERTO</option>
+                  <option value="USED">CERRADO</option>
+                </select>
+              </div>
+              <div *ngIf="oven.isEditing && oven.status=='OPENED'">
+                 SIN ESTATUS
+              </div>
+              <div *ngIf="!oven.isEditing">{{oven.status=='OPENED'?'SIN ESTATUS':(oven.status=='CLOSED'?'ABIERTO':'CERRADO')}}</div>
+            </div>
+            <div class="table-ovens-row">{{parseDateStr(oven.createAt)}}</div>
+            <div class="table-ovens-row">
+              <button mat-raised-button *ngIf="!oven.isEditing" (click)="editRecord('OVEN',index)">Editar</button>
+              <button mat-raised-button *ngIf="oven.isEditing" (click)="saveEdit('OVEN',index)">Guardar</button>
+              <button mat-raised-button (click)="getReport(oven.id,index)" *ngIf="!oven.isLoading" >Reporte</button>
+          <mat-spinner [diameter]="40" *ngIf="oven.isLoading"></mat-spinner>
+            </div>
+          </div>
+          <div class="table-paginator"> 
+            <div class="page-label">Página: {{pageIndexOvens+1}}</div>
+            <div class="page-total-count">{{ paginator(pageIndexOvens,pageTotalOvens) }}</div>
+            <div class="page-control">
+              <mat-icon (click)="ant()">navigate_before</mat-icon>
+              <mat-icon (click)="next()">navigate_next</mat-icon>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Producto terminado">
+          <div [formGroup]="formProductEnded">
+          <mat-button-toggle-group formControlName="typeTableProductEnded">
+            <mat-button-toggle value="ACUMULATED">Acumulado</mat-button-toggle>
+            <mat-button-toggle value="SINGLE">Registro individual</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+          <div class="table-product-end-headers">
+            <div class="table-product-end-header">Producto</div>
+            <div class="table-product-end-header">Presentación</div>
+            <div class="table-product-end-header">Lote</div>
+            <div class="table-product-end-header">Fecha de registro</div>
+            <div class="table-product-end-header">Unidades</div>
+            <div class="table-product-end-header">Peso</div>
+            <div class="table-product-end-header">Opciones</div>
+          </div>
+          <div class="table-product-end-rows" *ngFor="let proEnd of productsEnded;let index =index;">
+            <div class="table-product-end-row">{{proEnd.name}}</div>
+            <div class="table-product-end-row">{{proEnd.presentation}}</div>
+            <div class="table-product-end-row">{{proEnd.lot}}</div>
+            <div class="table-product-end-row">{{proEnd.registerDate?parseDateStr(proEnd.registerDate):''}}</div>
+            <div class="table-product-end-row">{{proEnd.units}}</div>
+            <div class="table-product-end-row">{{proEnd.weight.toFixed(2)}}</div>
+            <div class="table-product-end-row">
+              <button mat-raised-button (click)="getReport(proEnd.id,index)" *ngIf="!proEnd.isLoading" [disabled]="typeTableProductEnded.value=='ACUMULATED'">Reporte</button>
+              <mat-spinner [diameter]="40" *ngIf="proEnd.isLoading"></mat-spinner>
+            </div>
+          </div>
+          <div class="table-paginator"> 
+            <div class="page-label">Página: {{pageIndexProductEnded+1}}</div>
+            <div class="page-total-count">{{ paginator(pageIndexProductEnded,pageTotalProductEnded) }}</div>
+            <div class="page-control">
+              <mat-icon (click)="ant()">navigate_before</mat-icon>
+              <mat-icon (click)="next()">navigate_next</mat-icon>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Inventario general">
+          <div class="btn-report-inventory-general-container">
+            <button mat-raised-button (click)="getReport(1,1)" *ngIf="!isLoading">
+              Reporte general
+            </button>
+            <mat-spinner [diameter]="40" style="color: white" *ngIf="isLoading"></mat-spinner>
+          </div> 
+          <div class="table-inventory-general-headers">
+            <div class="table-inventory-general-header">Producto</div>
+            <div class="table-inventory-general-header">Presentación</div>
+            <div class="table-inventory-general-header">Lote</div>
+            <div class="table-inventory-general-header">Unidades</div>
+            <div class="table-inventory-general-header">Peso</div>
+            <div class="table-inventory-general-header">Opciones</div>
+          </div>
+          <div class="table-inventory-general-rows" *ngFor="let inve of inventory;let index=index">
+            <div class="table-inventory-general-row">{{inve.name}}</div>
+            <div class="table-inventory-general-row">{{inve.type_presentation}}</div>
+            <div class="table-inventory-general-row">{{inve.lot_id}}</div>
+            <div class="table-inventory-general-row">
+              <mat-form-field class="example-full-width" appearance="fill" *ngIf="inve.editing">
+                <mat-label>Unidades</mat-label>
+                <input matInput value="{{inve.units}}" [(ngModel)]="inve.unitsTemp" >
+              </mat-form-field>
+              
+              <label *ngIf="!inve.editing">{{inve.units}}</label>
+            </div>
+            <div class="table-inventory-general-row">
+              <mat-form-field class="example-full-width" appearance="fill" *ngIf="inve.editing">
+                <mat-label>Peso</mat-label>
+                <input matInput value="{{inve.weight}}" [(ngModel)]="inve.weightTemp" >
+              </mat-form-field>
+              <label *ngIf="!inve.editing">{{inve.weight}} KG</label>
+            </div>
+            <div class="table-inventory-general-row">
+              <mat-spinner [diameter]="40" *ngIf="inve.isUpdating"></mat-spinner>
+              <button mat-raised-button  *ngIf="!inve.isUpdating" color="default" (click)="(inve.editing)?save(index):edit(index)">{{(inve.editing)?"Guardar":"Editar"}}</button>
+              <button mat-raised-button color="warn" (click)="cancel(index)" *ngIf="inve.editing && !inve.isUpdating">Cancelar</button>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Cambio presentaci&oacute;n">
+          <table class="table-devolutions">
+          <tr class="table-products-devolution-headers">
+            <th class="table-products-devolution-header">Producto</th>
+            <th class="table-products-devolution-header">Presentación</th>
+            <th class="table-products-devolution-header">Lote</th>
+            <th class="table-products-devolution-header">Cantidad</th>
+            <th class="table-products-devolution-header">Peso</th>
+            <th class="table-products-devolution-header">Fecha</th>
+            <!-- <th class="table-products-devolution-header">Opciones</th> -->
+          </tr>
+          <tr class="table-products-devolution-rows" *ngFor="let devolution of productDevolution">
+            <td class="table-products-devolution-row">{{devolution.name}}</td>
+            <td class="table-products-devolution-row">{{devolution.presentation}}</td>
+            <td class="table-products-devolution-row">{{devolution.lot}}</td>
+            <td class="table-products-devolution-row">{{devolution.units}}</td>
+            <td class="table-products-devolution-row">{{devolution.weight}}</td>
+            <td class="table-products-devolution-row">{{devolution.date?parseDateFromIso(devolution.date):''}}</td>
+            <!-- <td class="table-products-devolution-row"><mat-icon (click)="copyRow(devolution)" #tooltip="matTooltip"  matTooltip="Haz click para copiar"
+              matTooltipPosition="right">content_copy</mat-icon></td> -->
+          </tr>
+        </table>
+          <div class="table-paginator"> 
+            <div class="page-label">Página: {{pageIndexProductDevolution+1}}</div>
+            <div class="page-total-count">{{ paginator(pageIndexProductDevolution,pageTotalProductDevolution) }}</div>
+            <div class="page-control">
+              <mat-icon (click)="ant()">navigate_before</mat-icon>
+              <mat-icon (click)="next()">navigate_next</mat-icon>
+            </div>
+          </div>
+          <div class="btn-report-devolution-container">
+            <button mat-raised-button *ngIf="!isLoading" (click)="getReport(3,3)">Reporte</button>
+              <mat-spinner [diameter]="40" style="color: white" *ngIf="isLoading"></mat-spinner>
+          </div>
+        </mat-tab>
+        <mat-tab label="Entrega a vendedor">
+          <div [formGroup]="form3">
+            <mat-button-toggle-group formControlName="typeTableProductDelivered">
+              <mat-button-toggle value="INDIVIDUAL">Individual</mat-button-toggle>
+              <mat-button-toggle value="ACCUMULATED">Acumulado</mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+          <div class="table-products-delivered-headers">
+            <div class="table-products-delivered-header">Producto</div>
+            <div class="table-products-delivered-header">Presentación</div>
+            <div class="table-products-delivered-header">Lote</div>
+            <div class="table-products-delivered-header">Cantidad</div>
+            <div class="table-products-delivered-header">Peso</div>
+            <div class="table-products-delivered-header">Enviado a:</div>
+            <div class="table-products-delivered-header">Fecha</div>
+          </div>
+          <div class="table-products-delivered-rows" *ngFor="let deliver of productDelivered">
+            <div class="table-products-delivered-row">{{deliver.productName}}</div>
+            <div class="table-products-delivered-row">{{deliver.presentation}}</div>
+            <div class="table-products-delivered-row">{{deliver.loteId}}</div>
+            <div class="table-products-delivered-row">{{deliver.quantity}}</div>
+            <div class="table-products-delivered-row">{{deliver.weight}}</div>
+            <div class="table-products-delivered-row">{{deliver.name}}</div>
+            <div class="table-products-delivered-row">{{deliver.outputDate?parseDateStr(deliver.outputDate):''}}</div>
+          </div>
+          <div class="table-paginator"> 
+            <div class="page-label">Página: {{pageIndexProductDelivered+1}}</div>
+            <div class="page-total-count">{{ paginator(pageIndexProductDelivered,pageTotalProductDelivered) }}</div>
+            <div class="page-control">
+              <mat-icon (click)="ant()">navigate_before</mat-icon>
+              <mat-icon (click)="next()">navigate_next</mat-icon>
+            </div>
+          </div>
+          <div class="btn-report-delivered-container">
+            <button mat-raised-button *ngIf="!isLoading" (click)="getReport(2,2)">Reporte</button>
+              <mat-spinner [diameter]="40" style="color: white" *ngIf="isLoading"></mat-spinner>
+          </div> 
+        </mat-tab>
+        </mat-tab-group>
     </div>
 </div>

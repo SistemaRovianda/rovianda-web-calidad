@@ -40,7 +40,7 @@ const IMPORTS = [
   }),
   HttpClientModule,
   AppProviderModule,
-  ToastrModule.forRoot(),
+  ToastrModule.forRoot()
 ];
 
 @NgModule({

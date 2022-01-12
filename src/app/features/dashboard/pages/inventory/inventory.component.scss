@@ -14,7 +14,7 @@
 }
 .table-container{
     width: 100%;
-    height: 800px;
+    height: auto;
     overflow-y: scroll;
 }
 .loader{
@@ -23,4 +23,293 @@
 }
 .load-div{
     text-align: -webkit-center;
+}
+
+.table-meat-headers{
+    
+    display: flex;
+    background-color: #72b7e4;
+    margin-top: 20px;
+}
+
+.table-meat-header{
+    width: 9.09%;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+.table-meat-rows{
+    
+    display: flex;
+    margin-top: 20px;
+    
+}
+.table-meat-row{
+    width: 9.09%;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+}
+.tab{
+    overflow:hidden;
+}
+.table-drief-headers{
+    
+    display: flex;
+    background-color: #72b7e4;
+    margin-top: 20px;
+    
+}
+.table-drief-header{
+    width: 12.5%;
+    display: inline-block;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+}
+.table-drief-rows{
+    
+    display: flex;
+    margin-top: 20px;
+    
+}
+.table-drief-row{
+    width: 12.5%;
+    display: inline-block;
+    font-size: 14px;
+    text-align: center;
+}
+
+.table-packing-headers{
+    
+    background-color: #72b7e4;
+    display: flex;
+}
+.table-packing-header{
+    display: inline-block;
+    width: 12.50%;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+}
+.table-packing-rows{
+    margin-top: 20px;
+    
+    display: flex;
+}
+.table-packing-row{
+    display: inline-block;
+    width: 12.50%;
+    text-align: center;
+    font-size: 14px;
+}
+
+.form{
+    display: inline-flex;
+    width: min-content;
+}
+
+.form>.form-input{
+    display: inline-block;
+}
+
+.button-search-container{
+    display: block;
+    line-height: 80px;
+}
+.searcher-container{
+    text-align: center;
+    width: 100%;
+}
+
+.table-formulations-headers{
+    background-color: #72b7e4;
+}
+.table-formulations-header{
+    color: white;
+    display: inline-block;
+    width:14.28%;
+}
+.table-formulations-headers,.table-formulations-rows{
+    display: flex;
+}
+.table-formulations-row{
+    display: inline-block;
+    width:14.28%;
+    padding: 10px;
+}
+mat-form-field{
+    width: 150px;
+}
+.table-outputs-meat-headers,.table-outputs-drief-headers,.table-outputs-packing-headers{
+    display: flex;
+    width: 100%;
+    background-color: #72b7e4;
+}
+.table-outputs-meat-header,.table-outputs-meat-row{
+    display: inline-block;
+    width: 20%;
+    text-align: center;
+}
+.table-outputs-drief-header,.table-outputs-drief-row{
+    display: inline-block;
+    width: 25%;
+    text-align: center;
+}
+.table-outputs-packing-header,.table-outputs-packing-row{
+    display: inline-block;
+    width: 33.3%;
+    text-align: center;
+}
+.table-outputs-meat-header,.table-outputs-drief-header,.table-outputs-packing-header{
+    display: inline-block;
+    color: white;
+}
+
+.table-process-headers{
+    display: flex;
+    width: 100%;
+    background-color: #72b7e4;
+}
+.table-proces-rows{
+    display: flex;
+    width: 100%;
+}
+.table-process-header{
+    color: white;
+}
+.table-process-header,.table-process-row{
+    display: inline-block;
+    width: 14.28%;
+    text-align: center;
+}
+.table-ovens-headers{
+    width: 100%;
+    display: flex;
+    background-color: #72b7e4;
+}
+.table-ovens-header{
+    width: 14.28%;
+    display: inline-block;
+    color: white;
+}
+.table-ovens-rows{
+    width: 100%;
+    display: inline-block;
+}
+.table-ovens-row{
+    width: 14.28%;
+    display: inline-block;
+}
+
+.table-product-end-headers{
+    width: 100%;
+    display: flex;
+    background-color: #72b7e4;
+}
+.table-product-end-header{
+    width: 14.28%;
+    display: inline-block;
+    color: white;
+}
+.table-product-end-rows{
+    width: 100%;
+    display: flex;
+}
+.table-product-end-row{
+    width: 14.28%;
+    display: inline-block;
+}
+.table-products-delivered-headers{
+    background-color:  #72b7e4;
+}
+.table-products-delivered-headers,.table-products-delivered-rows{
+    display: flex;
+    width: 100%;
+}
+.table-products-delivered-header{
+    color: white;
+}
+.table-products-delivered-row,.table-products-delivered-header{
+    display: inline-block;
+    width: 14.28%;
+}
+
+.table-paginator{
+    width: 100%;
+    display: flex;
+    background-color:  #72b7e4;
+}
+.page-label{
+    width: 33%;
+    display: inline-block;
+    color: white;
+    text-align: center;
+}
+.page-total-count{
+    width: 33%;
+    display: inline-block;
+    color: white;
+    text-align: center;
+}
+.page-control{
+    width: 33%;
+    display: inline-block;
+    color: white;
+    text-align: right;
+}
+
+.table-inventory-general-headers{
+    width: 100%;
+    display: flex;
+    background-color: #72b7e4;
+}
+.table-inventory-general-header{
+    display: inline-block;
+    width: 16.6%;
+    color: white;
+    text-align: center;
+}
+.table-inventory-general-rows{
+    width: 100%;
+    display: flex;
+}
+.table-inventory-general-row{
+    width: 16.6%;
+    display: inline-block;
+    text-align: center;
+}
+
+.oven-status-packaging{
+    display: block;
+    text-align: center;
+}
+
+.oven-status-buttons{
+    text-align: center;
+}
+
+.btn-report-inventory-general-container,.btn-report-delivered-container,.btn-report-devolution-container{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.table-products-devolution-headers{
+    background-color:  #72b7e4;
+}
+.table-products-devolution-headers,.table-devolution-delivered-rows{
+    
+    width: 100%;
+}
+.table-products-devolution-header{
+    color: white;
+}
+.table-products-devolution-row,.table-products-devolution-header{
+    width: 16.66%;
+    text-align: center;
+}
+
+.table-devolutions{
+    width: 100%;
 }

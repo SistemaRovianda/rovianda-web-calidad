@@ -1,0 +1,16 @@
+<div>
+    <div><h1>Modificación</h1></div>
+    <div>Se deberá proporcionar el código de administrador</div>
+    <form [formGroup]="form">
+        <mat-form-field hintLabel="Max 10 characters" appearance="fill">
+            <mat-label>Código</mat-label>
+            <input matInput maxlength="10" formControlName="code">
+            
+          </mat-form-field>
+          <mat-hint style="color: red;" *ngIf="codeNotValid">Código no valido</mat-hint>
+    </form>
+    <div>
+        <button mat-raised-button [disabled]="isLoading" (click)="validateCode()">Validar código</button>
+        <mat-spinner [diameter]="70" *ngIf="isLoading" class="spinner"></mat-spinner>
+    </div>
+</div>

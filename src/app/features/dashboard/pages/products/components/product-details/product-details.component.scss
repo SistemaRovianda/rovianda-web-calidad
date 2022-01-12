@@ -1,0 +1,59 @@
+.table-presentations-headers{
+    background-color: #2771d6;
+}
+.table-presentations-headers,.table-presentations-rows{
+    display: flex;
+    width: 80%;
+    margin-left: 10%;
+}
+.table-presentations-header{
+    color: white;
+}
+
+.table-presentations-header,.table-presentations-row{
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    padding: 10px
+}
+.presentations-title,.product-name{
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+
+.close-icon-container{
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+.table-ingredients-headers{
+    background-color: #2771d6;
+}
+.table-ingredients-headers,.table-ingredients-rows{
+    display: flex;
+    width: 80%;
+    margin-left: 10%;
+    
+}
+.table-ingredients-header{
+    color: white;
+}
+.table-ingredients-header,.table-ingredients-row{
+    display: inline-block;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+}
+
+.table-ingredients,.table-presentations{
+    height: 250px;
+    overflow-y: scroll;
+}
+.button-add-ingredient-container{
+    width: 100%;
+    text-align: center;
+}
+.container{
+    background-color: white;
+}

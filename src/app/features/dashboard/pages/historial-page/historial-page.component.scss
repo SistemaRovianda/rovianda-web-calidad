@@ -5,7 +5,9 @@ $base-color-text: #717171;
 .container-historial {
   height: 100%;
   width: 100%;
+  display: block;
   .container-filter {
+    margin-top: 30px;
     form {
       height: 100%;
       padding: 0;
@@ -69,4 +71,62 @@ $base-color-text: #717171;
 }
 .receptions-table{
   align-self: center;
+}
+
+.filter-product{
+  display: inline-flex;
+}
+.table-product-ended{
+  text-align: center;
+  width: 80%;
+  margin-left: 10%;
+}
+
+.product-label{
+  line-height: 77px;
+  vertical-align: middle;
+}
+.item{
+  display: inline-block;
+  margin-left: 20px;
+}
+.select-product-button{
+  width: 100px;
+  height: 30px;
+  display: inline-block;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.headers-outputs-product-ended{
+  width: 100%;
+  display: flex;
+  background-color: #2771d6;
+}
+.header-output-product-ended{
+  width: 20%;
+  color: black;
+  text-align: center;
+}
+.page-indicator{
+  width: 20%;
+}
+.paginator-indicator{
+  width: 40%;
+  text-align: center;
+}
+.paginator-end-controls{
+  width: 40%;
+  text-align: right;
+}
+.footer-table-outputs-formulation{
+  width: 100%;
+  display: flex;
+  background-color: #2771d6;
+  color: white;
+}
+
+.details-properties-row{
+  display: block;
+  width: 100%;
 }

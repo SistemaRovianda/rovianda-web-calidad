@@ -1,0 +1,11 @@
+<div>
+    <label>Selecciona un formato</label>
+    <div style="text-align:center">
+        <button mat-raised-button (click)="getPdf()">PDF</button>
+        <button mat-raised-button (click)="getExcel()">Excel</button>
+        <button mat-raised-button color="warn" (click)="cancel()">Cancelar</button>
+    </div>
+    <div *ngIf="isLoading" style="width: 100%;">
+        <mat-spinner [diameter]="70" style="margin-left: 40%;"></mat-spinner>
+    </div>
+</div>

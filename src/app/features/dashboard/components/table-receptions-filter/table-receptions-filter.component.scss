@@ -1,0 +1,253 @@
+.filter-product{
+    display: inline-flex;
+}
+.item{
+    display: inline-block;
+    margin-left: 20px;
+}
+.container{
+    width: 100%;
+    text-align: center;
+}
+.product-label{
+    line-height: 77px;
+    vertical-align: middle;
+}
+
+.table-header{
+    width: 90%;
+    margin-left: 5%;
+    display: flex;
+    background-color: #3388FF;
+    padding: 10px;
+}
+.table-body-row{
+    width: 90%;
+    margin-left: 5%;
+    background-color: #DBEBEB;
+    padding: 10px;
+}
+.table-body-row-body{
+    background-color: #E6FAFA;
+    display: block;
+}
+.table-header-item{
+    display: block;
+    width: 12.5%;
+    color:white;
+    text-align: center;
+}
+
+.header{
+    text-align: center;
+    width: 14.28%;
+}
+.details-section{
+    text-align: right;
+    width: 100%;
+    color: white;
+}
+
+.table-header-item-body{
+    display: block;
+    width: 12.5%;
+    color:#000000;
+}
+
+.details-inspection-container{
+    width: 100%;
+}
+.details-inspection-container>label{
+    text-align: center;
+}
+.details-properties-row{
+    display: block;
+    width: 100%;
+}
+.properties-sections{
+    width: 80%;
+    margin-left: 10%;
+    background-color: white;
+}
+
+.item-property-title{
+    width: 15%;
+    text-align: center;
+}
+
+.pdf-report-button{
+    float: left;
+    background-color: #40B3DD;
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.pdf-report-button-disabled{
+    float: left;
+    background-color: gray;
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+.icon{
+    line-height: 40px;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+}
+
+.icon-excel{
+    margin-top: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+.pdf-report-button:active{
+    background-color: white;
+}
+
+
+.excel-report-button{
+    float: right;
+    background-color: #099A1A;
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+.excel-report-button-disabled{
+    float: right;
+    background-color: gray;
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+
+.excel-report-button:active{
+    background-color: white;
+}
+
+.button-reports-section{
+    width: 100%;
+    display: inline-block;
+}
+
+.select-product-button{
+    width: 100px;
+    height: 30px;
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.headers-table-outputs-formulation,.footer-table-outputs-formulation,.headers-table-outputs-process{
+    width: 100%;
+    display: flex;
+    background-color: #2771d6;
+    color: white;
+}
+.rows-table-outputs-formulation{
+    width: 100%;
+    display: flex;
+}
+
+
+.header-title{
+    width: 14.28%;
+    text-align: center;
+    color: white;
+}
+.header-title-output-process{
+    width: 16.66%;
+    text-align: center;
+    color: white;
+}
+.row-output-formulation{
+    width: 14.28%;
+    text-align: center;
+    color: black;
+}
+.footer-paginator-controls{
+    color: white;
+    display: flex;
+    width: 100%;
+}
+.page-indicator{
+    width: 20%;
+}
+.paginator-indicator{
+    width: 40%;
+    text-align: center;
+}
+.paginator-end-controls{
+    width: 40%;
+    text-align: right;
+}
+
+.container-ingredients-header{
+    display: flex;
+    width: 100%;
+    background-color: #72b7e4;
+    color: white;
+}
+.container-ingredients-header-item{
+    width: 25%;
+    text-align: center;
+}
+.container-ingredients-body{
+    width: 100%;
+    display: flex;
+}
+.container-ingredients-body-item{
+    width: 25%;
+    text-align: center;
+}
+.container-ingredients-layout{
+    display: block;
+}
+.footer-container-expansion-panel-button{
+    text-align: right;
+}
+
+
+.body-table-outputs-process{
+    width: 100%;
+    display: flex;
+}
+.row-table-outputs-process{
+    width: 16.66%;
+    text-align: center;
+}
+
+.headers-outputs-ovens{
+    display: flex;
+    background-color: #2771d6;
+    width: 100%;
+    color: white;
+}
+.rows-outputs-oves{
+    display: flex;
+}
+.header-output-oven{
+    width: 12.5%;
+}
+.rows-outputs-ovens{
+    display: flex;
+}
+.row-output-ovens{
+    width: 12.5%;
+}
+.headers-outputs-product-ended{
+    width: 100%;
+    display: flex;
+    background-color: #2771d6;
+}
+.header-output-product-ended{
+    width: 20%;
+    color: black;
+    text-align: center;
+}

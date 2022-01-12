@@ -1,0 +1,74 @@
+.filter-search{
+    width: 100%;
+    display: flex;
+    background-color: #E7E9E9;
+}
+.form-filter{
+    width: 100%;
+    display: flex;
+}
+.part-filter{
+    width: 33%;
+}
+.part-filter-end{
+    width: 18%;
+}
+.part-filter-spinner{
+    width: 15%;
+}
+
+.section{
+    display: flex;
+}
+
+.input{
+    display: inline-block;
+}
+
+.datepickers-container{
+    display: block;
+}
+.date-start-selector{
+    display: inline-block;
+    text-align: center;
+}
+
+.date-end-selector{
+    display: inline-block;
+    text-align: center;
+    margin-left: 40px;
+}
+.date-picker-container{
+  text-align: center;
+}
+
+.search-button{
+    width: 59px;
+    height: 25px;
+    background-color: white;
+    border-radius: 20px;
+    text-align: center;
+    margin-left: 40px;
+}
+.search-button:hover{
+    background-color: gray; 
+}
+.search-button:active{
+    background-color: white; 
+}
+
+.invisible{
+    width: 0px;
+    height: 0px;
+}
+.center{
+    text-align: center;
+}
+.search-button-disabled{
+    background-color: gray;
+    width: 59px;
+    height: 25px;
+    border-radius: 20px;
+    text-align: center;
+    margin-left: 40px;
+}

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators, FormControl } from "@angular/forms";
 import { AppStateInterface } from "src/app/shared/models/app-state.interface";
 import { Store } from "@ngrx/store";
-import { MatIconRegistry } from "@angular/material";
+import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { SELECT_GET_REPORT_LOADING } from "../../store/report-page/report.selector";
 import * as fromGetReportActions from "../../store/report-page/report.action";

@@ -34,6 +34,16 @@ const ROUTES: Routes = [
           )
       },
       {
+        path:"productos",
+        loadChildren: ()=>import("./pages/products/page/products-page/products-page.module").then(
+          m=>m.ProductsPageModule
+        )
+      },
+      {
+        path:"productos/:productId",
+        loadChildren: ()=>import("./pages/products/components/product-details/product-details.module").then(m=>m.ProductDetailsModule)
+      },
+      {
         path: "add-user",
         loadChildren: () =>
           import("./pages/add-user-page/add-user-page.module").then(
@@ -53,6 +63,12 @@ const ROUTES: Routes = [
           import("./pages/reports-page/reports-page.module").then(
             m => m.ReportsPageModule
           )
+      },
+      {
+        path: "code",
+        loadChildren:()=>import("./pages/code-page/code-page.module").then(
+          m=>m.CodePageModule
+        )
       }
     ]
   }

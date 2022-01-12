@@ -1,0 +1,16 @@
+h3{
+    text-align: center;
+}
+.container{
+    width: 50%;
+    margin-left: 25%;
+    height: 300px;
+    text-align: center;
+    border: 3px rgb(119, 119, 119) solid;
+}
+.container>label{
+    display: block;
+}
+.spinner{
+    margin-left: 45%;
+}

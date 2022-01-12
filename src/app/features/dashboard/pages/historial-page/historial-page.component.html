@@ -1,67 +1,58 @@
 <div class="container-historial" fxLayout="column">
   <div class="container-filter" fxFlex="15%">
-    <form [formGroup]="filter" fxLayout="row" fxLayoutAlign="center end">
-      <mat-form-field class="item-form" appearance="outline">
-        <mat-label>Tipo de búsqueda</mat-label>
-        <select
-          disabled
-          matNativeControl
-          class="input"
-          formControlName="option"
-          required
-          (change)="selectType()"
-        >
-          <option *ngFor="let section of options" [value]="section.value">{{
-            section.name
-          }}</option>
-        </select>
-      </mat-form-field>
-      <mat-form-field class="item-form" appearance="outline">
-        <mat-label>Lote</mat-label>
-        <input
-          matInput
-          type="text"
-          class="input"
-          #search
-          formControlName="search"
-          [disabled]="option.invalid"
-        />
-        
-          
-      </mat-form-field>
-      <mat-form-field color="accent" appearance="fill">
-        <mat-label>A partir de: </mat-label>
-        <input matInput [matDatepicker]="picker1" (dateChange)="changeDate('change', $event)">
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field>
-      
-      <div class="buttonSearch">
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="searchElement()"
-          [disabled]="!(filter.valid && dateSelected!=null)"
-        >
-        <mat-icon matSuffix>search</mat-icon>
-        </button>
-      </div>
-    </form>
-    
+    <app-searh-history-filter [_isLoading]="isLoading" (emitter)="searchProductsBylotAndDate($event)"></app-searh-history-filter>
   </div>
   
-  <div fxFlex="85%" fxLayout="row">
-    
-    <div fxFlex="45%">
-      <app-table-historial></app-table-historial>
-    </div>
-    <div fxFlex="55%" fxLayout="column">
-      <!-- <div fxFlex="25%">
-        <app-card-date></app-card-date>
-      </div> -->
-      <div fxFlex="100%">
-        <app-table-documents></app-table-documents>
+    <app-table-receptions-filter *ngIf="typeFilter!='PRODUCT_ENDED'" [_products]="products" [_isLoading]="isLoading" (setLoading)="setLoading($event)" (productSelected)="searchProductSelected($event)" [_receptions]="receptions" (_entrance)="getReportEntrance($event)" [_typeFilter]="typeFilter"></app-table-receptions-filter>
+
+    <div class="table-product-ended" *ngIf="typeFilter=='PRODUCT_ENDED'">
+    <div class="filter-product">
+        <label class="item product-label">Producto</label>
+        <form [formGroup]="form" class="item">
+        <mat-form-field appearance="fill">
+            <mat-select formControlName="product">
+              <mat-option *ngFor="let product of products" [value]="product">
+                {{product}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+        <button mat-raised-button color="default" class="select-product-button" (click)="getProductEndedHistory()">Seleccionar</button>
+    </div>  
+      <div class="headers-outputs-product-ended">
+        <div class="header-output-product-ended">Producto</div>
+        <div class="header-output-product-ended">Lote</div>
+        <div class="header-output-product-ended">Fecha de alta</div>
+        <div class="header-output-product-ended">Caducidad</div>
+        <div class="header-output-product-ended">Cantidad</div>
       </div>
+
+      <mat-expansion-panel *ngFor="let productEnded of productsEnded" class="details-properties-row">
+        <mat-expansion-panel-header>
+          <mat-panel-title >
+            
+              <div class="header-output-product-ended">{{productEnded.productName}} {{productEnded.presentation}}</div>
+              <div class="header-output-product-ended">{{productEnded.lotId}}</div>
+              <div class="header-output-product-ended">{{productEnded.registerDate}}</div>
+              <div class="header-output-product-ended">{{productEnded.expiration}}</div>
+              <div class="header-output-product-ended">{{productEnded.uniMed=="PZ"?productEnded.outputOfWarehouse:productEnded.weightOfWarehouse}}</div>
+          
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-panel-description >  
+          <button mat-raised-button color="primary" [disabled]="isLoading" (click)="downLoadReportProductEnded(productEnded.id)"> Reporte de trazabilidad </button>
+        </mat-panel-description>
+        </mat-expansion-panel>
+        <div class="footer-table-outputs-formulation">
+              
+          <div class="page-indicator">Pagina: {{pageIndexProductEnded+1}}</div>
+          <div class="paginator-indicator">{{pageIndexProductEnded*10}} - {{((pageIndexProductEnded+1)*10 > totalProductEnded)?totalProductEnded:(pageIndexProductEnded+1)*10}}/{{totalProductEnded}}</div>
+          <div class="paginator-end-controls">
+            <mat-icon >navigate_before</mat-icon>
+            <mat-icon >navigate_next</mat-icon>
+          </div>
+
+          </div>
     </div>
-  </div>
+  
 </div>
